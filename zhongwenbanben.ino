@@ -672,7 +672,7 @@ void setup() {
   SPI.begin(TFT_SCLK, -1, TFT_MOSI, TFT_CS);
   tft.init(SCREEN_W, SCREEN_H);
   tft.setRotation(0);
-  tft.invertDisplay(true);
+  tft.invertDisplay(false);
   tft.fillScreen(CLR_BG);
 
   u8g2CN.setFont(u8g2_font_wqy12_t_chinese3);
