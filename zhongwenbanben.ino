@@ -1,14 +1,8 @@
 /*
- * JK BMS 蓝牙监控仪表盘 (全中文版 + 无闪烁)
- * 硬件: ESP32-32E + ST7789 2.8寸 240x320
- * BMS:  JK_BD4A24S10P (JK02_32S协议)
- * 风格: 极简电竞风 / 新能源车机仪表盘
- *
- * 需安装库:
- *   - Adafruit ST7789
- *   - Adafruit GFX Library
- *   - U8g2  (中文字体渲染)
- *   - ESP32 BLE Arduino (随ESP32核心自带)
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 320x240 横屏
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
  */
 
 #include <Arduino.h>
@@ -20,7 +14,7 @@
 #include <SPI.h>
 #include <U8g2lib.h>
 
-// ===================== 引脚配置 =====================
+// ==================== 引脚配置 ====================
 #define TFT_CS    15
 #define TFT_DC    2
 #define TFT_RST   -1
@@ -28,7 +22,7 @@
 #define TFT_MOSI  13
 #define TFT_BL    21
 
-// ===================== BLE 配置 =====================
+// ==================== BLE 配置 ====================
 #define BMS_MAC  "98:DA:20:07:B9:00"
 #define BMS_NAME "JK_BD4A24S10P"
 
@@ -46,37 +40,31 @@ static BLEUUID charUUID((uint16_t)0xFFE1);
 #define MIN_FRAME_SIZE 300
 #define MAX_FRAME_SIZE 320
 
-// ===================== 显示参数 =====================
-#define SCREEN_W 240
-#define SCREEN_H 320
+// ==================== 屏幕配置 ====================
+#define SCREEN_W 320
+#define SCREEN_H 240
 
+// ==================== 赛车模式颜色 ====================
 #define CLR_BG          0x0000
-#define CLR_CYAN        0x07FF
-#define CLR_GREEN       0x07E0
-#define CLR_RED         0xF800
-#define CLR_ORANGE      0xFD20
-#define CLR_YELLOW      0xFFE0
+#define CLR_NEON_BLUE   0x04FF
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_PINK   0xF81F
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
 #define CLR_WHITE       0xFFFF
-#define CLR_GRAY        0x632C
-#define CLR_DARK_GRAY   0x2104
-#define CLR_DIM_CYAN    0x0418
-#define CLR_DIM_GREEN   0x0340
-#define CLR_DIM_RED     0x6000
-#define CLR_BAR_BG      0x18C3
-#define CLR_ACCENT      0x055F
+#define CLR_DARK_BLUE   0x0011
+#define CLR_DARK_GRAY   0x18E3
+#define CLR_GRAY        0x4208
+#define CLR_DIM_CYAN    0x0210
 
-// ===================== 显示对象 =====================
+// ==================== 显示对象 ====================
 Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
-
-// U8g2 用于中文渲染 (SSD1306 128x64 软件I2C 假引脚)
-// 不调用 begin()，仅用其缓冲区渲染中文再拷贝到TFT
 U8G2_SSD1306_128X64_NONAME_F_SW_I2C u8g2CN(U8G2_R0, 33, 34, U8X8_PIN_NONE);
+static uint16_t cnRgbBuf[128 * 20];
 
-// 中文渲染RGB缓冲区 (最大128x20像素)
-#define CN_BUF_MAX_PIXELS (128 * 20)
-static uint16_t cnRgbBuf[CN_BUF_MAX_PIXELS];
-
-// ===================== BMS 数据结构 =====================
+// ==================== BMS 数据结构 ====================
 struct BMSData {
   float voltage;
   float power;
@@ -94,15 +82,12 @@ struct BMSData {
 
 BMSData bms;
 
-// 上次显示值 (用于变化检测, 减少不必要的重绘)
 struct PrevDisplay {
   float power;
   float voltage;
   float current;
   float temp1;
   int   soc;
-  float cap_remain;
-  float cap_nominal;
   bool  isCharging;
   bool  isDischarging;
   bool  bleConnected;
@@ -110,7 +95,18 @@ struct PrevDisplay {
 };
 PrevDisplay prev;
 
-// ===================== BLE 全局变量 =====================
+// ==================== 动画状态 ====================
+struct AnimationState {
+  unsigned long lastFrame;
+  int pulsePhase;
+  float needleAngle;
+  float targetNeedleAngle;
+  float displayPower;
+  int glowIntensity;
+};
+AnimationState anim;
+
+// ==================== BLE 全局变量 ====================
 BLEClient* pClient = nullptr;
 BLERemoteCharacteristic* pWriteChar = nullptr;
 BLERemoteCharacteristic* pNotifyChar = nullptr;
@@ -128,14 +124,14 @@ volatile bool newDataReady = false;
 unsigned long lastDisplayUpdate = 0;
 unsigned long lastCommandTime = 0;
 unsigned long lastScanTime = 0;
-const unsigned long DISPLAY_INTERVAL = 500;
+const unsigned long DISPLAY_INTERVAL = 33;
 const unsigned long COMMAND_INTERVAL = 8000;
 const unsigned long SCAN_INTERVAL = 5000;
 const unsigned long DATA_TIMEOUT = 30000;
 
 bool needFullRedraw = true;
 
-// ===================== CRC 计算 =====================
+// ==================== CRC 计算 ====================
 uint8_t calcCRC(const uint8_t* data, uint16_t len) {
   uint8_t crc = 0;
   for (uint16_t i = 0; i < len; i++) {
@@ -144,7 +140,7 @@ uint8_t calcCRC(const uint8_t* data, uint16_t len) {
   return crc;
 }
 
-// ===================== 发送BLE命令 =====================
+// ==================== 发送BLE命令 ====================
 void sendBMSCommand(uint8_t cmd) {
   if (!pWriteChar) return;
   uint8_t cmdFrame[20] = {
@@ -159,13 +155,12 @@ void sendBMSCommand(uint8_t cmd) {
   pWriteChar->writeValue(cmdFrame, 20, true);
 }
 
-// ===================== 解析JK02_32S帧 =====================
+// ==================== 解析JK02_32S帧 ====================
 void parseCellInfoFrame() {
   if (framePos < MIN_FRAME_SIZE) return;
 
   uint8_t crc = calcCRC(frameBuf, framePos - 1);
   if (crc != frameBuf[framePos - 1]) {
-    Serial.println(F("[BMS] CRC校验失败"));
     return;
   }
 
@@ -200,13 +195,9 @@ void parseCellInfoFrame() {
   bms.dataValid     = true;
   bms.lastUpdate    = millis();
   newDataReady      = true;
-
-  Serial.printf("[BMS] V=%.2f P=%.1f I=%.2f SOC=%d%% T1=%.1f Cap=%.1f/%.1f\n",
-    bms.voltage, bms.power, bms.current, bms.soc, bms.temp1,
-    bms.capacity_remain, bms.capacity_nominal);
 }
 
-// ===================== BLE 通知回调 =====================
+// ==================== BLE 通知回调 ====================
 void notifyCallback(BLERemoteCharacteristic* pChar,
                     uint8_t* pData, size_t length, bool isNotify) {
   if (length >= 4 &&
@@ -230,12 +221,11 @@ void notifyCallback(BLERemoteCharacteristic* pChar,
   }
 }
 
-// ===================== BLE 客户端回调 =====================
+// ==================== BLE 客户端回调 ====================
 class MyClientCallback : public BLEClientCallbacks {
   void onConnect(BLEClient* pclient) {
     bleConnected = true;
     needFullRedraw = true;
-    Serial.println(F("[BLE] 已连接"));
   }
   void onDisconnect(BLEClient* pclient) {
     bleConnected = false;
@@ -243,15 +233,13 @@ class MyClientCallback : public BLEClientCallbacks {
     pWriteChar = nullptr;
     pNotifyChar = nullptr;
     needFullRedraw = true;
-    Serial.println(F("[BLE] 已断开"));
   }
 };
 
-// ===================== BLE 扫描回调 =====================
+// ==================== BLE 扫描回调 ====================
 class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
   void onResult(BLEAdvertisedDevice advertisedDevice) {
     if (advertisedDevice.getAddress().toString() == BMS_MAC) {
-      Serial.println(F("[BLE] 发现目标BMS!"));
       BLEDevice::getScan()->stop();
       if (advDevice) delete advDevice;
       advDevice = new BLEAdvertisedDevice(advertisedDevice);
@@ -260,17 +248,14 @@ class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
   }
 };
 
-// ===================== 连接BMS =====================
+// ==================== 连接BMS ====================
 bool connectToBMS() {
-  Serial.println(F("[BLE] 正在连接..."));
-
   if (!advDevice) return false;
 
   pClient = BLEDevice::createClient();
   pClient->setClientCallbacks(new MyClientCallback());
 
   if (!pClient->connect(advDevice)) {
-    Serial.println(F("[BLE] 连接失败!"));
     delete pClient;
     pClient = nullptr;
     return false;
@@ -278,7 +263,6 @@ bool connectToBMS() {
 
   BLERemoteService* pService = pClient->getService(serviceUUID);
   if (!pService) {
-    Serial.println(F("[BLE] 未找到服务!"));
     pClient->disconnect();
     return false;
   }
@@ -288,16 +272,13 @@ bool connectToBMS() {
     BLERemoteCharacteristic* c = kv.second;
     if (c->canWrite() && !pWriteChar) {
       pWriteChar = c;
-      Serial.println(F("[BLE] 找到写入特征"));
     }
     if (c->canNotify() && !pNotifyChar) {
       pNotifyChar = c;
-      Serial.println(F("[BLE] 找到通知特征"));
     }
   }
 
   if (!pNotifyChar) {
-    Serial.println(F("[BLE] 未找到通知特征!"));
     pClient->disconnect();
     return false;
   }
@@ -317,7 +298,7 @@ bool connectToBMS() {
   return true;
 }
 
-// ===================== 中文渲染核心 =====================
+// ==================== 中文渲染 ====================
 void drawCN(const char* text, int x, int y, uint16_t fgColor, const uint8_t* font) {
   u8g2CN.setFont(font);
   u8g2CN.setFontMode(1);
@@ -329,7 +310,7 @@ void drawCN(const char* text, int x, int y, uint16_t fgColor, const uint8_t* fon
   if (textW <= 0 || textH <= 0) return;
   if (textW > 128) textW = 128;
   if (textH > 20) textH = 20;
-  if (textW * textH > CN_BUF_MAX_PIXELS) return;
+  if (textW * textH > 128 * 20) return;
 
   u8g2CN.clearBuffer();
   u8g2CN.drawUTF8(0, 0, text);
@@ -364,48 +345,245 @@ void drawCN16(const char* text, int x, int y, uint16_t color) {
   drawCN(text, x, y, color, u8g2_font_wqy16_t_chinese3);
 }
 
-// ===================== 显示辅助函数 =====================
-uint16_t getSocColor(int soc) {
-  if (soc > 60) return CLR_GREEN;
-  if (soc > 30) return CLR_YELLOW;
-  if (soc > 15) return CLR_ORANGE;
-  return CLR_RED;
-}
-
-uint16_t getPowerColor() {
-  if (bms.isCharging)    return CLR_GREEN;
-  if (bms.isDischarging) return CLR_RED;
-  return CLR_GRAY;
-}
-
-uint16_t getPowerBarColor() {
-  if (bms.isCharging)    return CLR_DIM_GREEN;
-  if (bms.isDischarging) return CLR_DIM_RED;
-  return CLR_DARK_GRAY;
-}
-
-void drawProgressBar(int x, int y, int w, int h, int percent, uint16_t fillColor) {
-  tft.fillRect(x + 2, y + 2, w - 4, h - 4, CLR_BAR_BG);
-  int fillW = (int)((w - 4) * (float)percent / 100.0f);
-  if (fillW > 0) {
-    tft.fillRect(x + 2, y + 2, fillW, h - 4, fillColor);
+// ==================== 赛车模式：功率颜色系统 ====================
+uint16_t getPowerColor(float power, bool isCharging) {
+  if (!bms.dataValid) return CLR_DARK_GRAY;
+  
+  float absP = abs(power);
+  
+  if (isCharging) {
+    if (absP < 500) return CLR_NEON_BLUE;
+    if (absP < 1500) return CLR_NEON_CYAN;
+    if (absP < 3000) return CLR_NEON_GREEN;
+    return CLR_NEON_YELLOW;
+  } else {
+    if (absP < 500) return CLR_NEON_GREEN;
+    if (absP < 1500) return CLR_NEON_YELLOW;
+    if (absP < 3000) return CLR_NEON_ORANGE;
+    return CLR_NEON_RED;
   }
-  tft.drawFastHLine(x, y, w, CLR_GRAY);
-  tft.drawFastHLine(x, y + h - 1, w, CLR_GRAY);
-  tft.drawFastVLine(x, y, h, CLR_GRAY);
-  tft.drawFastVLine(x + w - 1, y, h, CLR_GRAY);
 }
 
-// 用背景色覆盖后绘制ASCII文本
-void printBg(int x, int y, int w, int h, const char* text, uint8_t size, uint16_t fgColor) {
-  tft.fillRect(x, y, w, h, CLR_BG);
-  tft.setTextSize(size);
-  tft.setTextColor(fgColor);
-  tft.setCursor(x, y);
-  tft.print(text);
+// ==================== 赛车模式：绘制环形进度条 ====================
+void drawArc(int cx, int cy, int r, int startAngle, int endAngle, uint16_t color, int thickness = 3) {
+  for (int t = 0; t < thickness; t++) {
+    int rr = r - t;
+    for (int angle = startAngle; angle <= endAngle; angle++) {
+      float rad = angle * PI / 180.0f;
+      int x = cx + rr * cos(rad);
+      int y = cy + rr * sin(rad);
+      tft.drawPixel(x, y, color);
+    }
+  }
 }
 
-// ===================== 变化检测 =====================
+// ==================== 赛车模式：绘制霓虹边框 ====================
+void drawNeonRect(int x, int y, int w, int h, uint16_t color) {
+  tft.drawFastHLine(x, y, w, color);
+  tft.drawFastHLine(x, y + h - 1, w, color);
+  tft.drawFastVLine(x, y, h, color);
+  tft.drawFastVLine(x + w - 1, y, h, color);
+}
+
+// ==================== 赛车模式：绘制环形SOC ====================
+void drawRaceSOC(int cx, int cy, int radius, int soc, uint16_t color) {
+  int startAngle = 135;
+  int endAngle = 405;
+  int fillAngle = startAngle + (endAngle - startAngle) * soc / 100;
+  
+  drawArc(cx, cy, radius, startAngle, endAngle, CLR_DARK_GRAY, 4);
+  
+  if (soc > 0) {
+    drawArc(cx, cy, radius, startAngle, fillAngle, color, 4);
+  }
+  
+  drawArc(cx, cy, radius + 6, startAngle - 2, startAngle + 2, CLR_DIM_CYAN, 2);
+  drawArc(cx, cy, radius + 6, endAngle - 2, endAngle + 2, CLR_DIM_CYAN, 2);
+}
+
+// ==================== 赛车模式：绘制扫描线效果 ====================
+void drawScanline() {
+  static int scanY = 0;
+  unsigned long now = millis();
+  
+  if (now - anim.lastFrame > 50) {
+    scanY = (scanY + 2) % SCREEN_H;
+    anim.lastFrame = now;
+  }
+  
+  tft.drawFastHLine(0, scanY, SCREEN_W, 0x0841);
+  if (scanY > 0) tft.drawFastHLine(0, scanY - 1, SCREEN_W, 0x0420);
+}
+
+// ==================== 赛车模式：主界面 ====================
+void drawRaceDashboard() {
+  unsigned long now = millis();
+  
+  if (needFullRedraw) {
+    tft.fillScreen(CLR_BG);
+    needFullRedraw = false;
+  }
+
+  tft.fillRect(0, 0, SCREEN_W, SCREEN_H, CLR_BG);
+
+  drawNeonRect(2, 2, SCREEN_W - 4, SCREEN_H - 4, CLR_DIM_CYAN);
+
+  uint16_t powerColor = getPowerColor(bms.power, bms.isCharging);
+  
+  tft.setTextColor(powerColor);
+  tft.setTextSize(1);
+  tft.setCursor(10, 8);
+  tft.print("RACE MODE");
+
+  if (bleConnected) {
+    tft.fillCircle(SCREEN_W - 15, 12, 5, CLR_NEON_GREEN);
+    tft.drawCircle(SCREEN_W - 15, 12, 8, CLR_DIM_CYAN);
+  } else {
+    tft.fillCircle(SCREEN_W - 15, 12, 5, CLR_NEON_RED);
+  }
+
+  int powerCX = 100;
+  int powerCY = 120;
+  
+  char powerStr[16];
+  if (!bms.dataValid) {
+    strcpy(powerStr, "---");
+  } else {
+    float absP = abs(bms.power);
+    if (absP >= 10000) {
+      sprintf(powerStr, "%d", (int)absP);
+    } else if (absP >= 1000) {
+      dtostrf(absP, 1, 0, powerStr);
+    } else if (absP >= 100) {
+      dtostrf(absP, 1, 1, powerStr);
+    } else {
+      dtostrf(absP, 1, 2, powerStr);
+    }
+  }
+
+  tft.setTextSize(6);
+  tft.setTextColor(powerColor);
+  tft.setCursor(powerCX - 60, powerCY - 30);
+  if (bms.isCharging && bms.dataValid) tft.print("+");
+  else if (bms.isDischarging && bms.dataValid) tft.print("-");
+  tft.print(powerStr);
+
+  tft.setTextSize(3);
+  tft.setCursor(powerCX + 40, powerCY - 10);
+  tft.print("W");
+
+  tft.setTextSize(2);
+  tft.setTextColor(CLR_GRAY);
+  tft.setCursor(powerCX - 50, powerCY + 35);
+  if (!bms.dataValid) {
+    tft.print("NO SIGNAL");
+  } else if (bms.isCharging) {
+    tft.setTextColor(CLR_NEON_GREEN);
+    tft.print("CHARGING");
+  } else if (bms.isDischarging) {
+    tft.setTextColor(CLR_NEON_RED);
+    tft.print("DISCHARGE");
+  } else {
+    tft.print("IDLE");
+  }
+
+  int socCX = 260;
+  int socCY = 120;
+  int socRadius = 60;
+  
+  uint16_t socColor;
+  if (!bms.dataValid) socColor = CLR_DARK_GRAY;
+  else if (bms.soc > 60) socColor = CLR_NEON_GREEN;
+  else if (bms.soc > 30) socColor = CLR_NEON_YELLOW;
+  else if (bms.soc > 15) socColor = CLR_NEON_ORANGE;
+  else socColor = CLR_NEON_RED;
+
+  drawRaceSOC(socCX, socCY, socRadius, bms.dataValid ? bms.soc : 0, socColor);
+
+  tft.setTextSize(4);
+  tft.setTextColor(socColor);
+  char socStr[8];
+  if (bms.dataValid) sprintf(socStr, "%d", bms.soc);
+  else strcpy(socStr, "--");
+  tft.setCursor(socCX - 25, socCY - 15);
+  tft.print(socStr);
+  
+  tft.setTextSize(2);
+  tft.setTextColor(CLR_GRAY);
+  tft.setCursor(socCX + 10, socCY - 5);
+  tft.print("%");
+
+  tft.setTextSize(1);
+  tft.setTextColor(CLR_DIM_CYAN);
+  tft.setCursor(socCX - 25, socCY + 20);
+  tft.print("BATTERY");
+
+  int gaugeY = 200;
+  drawNeonRect(10, gaugeY - 5, SCREEN_W - 20, 45, CLR_DARK_GRAY);
+
+  tft.setTextSize(1);
+  
+  tft.setTextColor(CLR_NEON_CYAN);
+  tft.setCursor(25, gaugeY + 5);
+  tft.print("TEMP");
+  tft.setTextSize(2);
+  tft.setTextColor(CLR_WHITE);
+  tft.setCursor(20, gaugeY + 20);
+  if (bms.dataValid) {
+    char tStr[8];
+    dtostrf(bms.temp1, 1, 0, tStr);
+    tft.print(tStr);
+    tft.setTextSize(1);
+    tft.print("C");
+  } else {
+    tft.print("--");
+  }
+
+  tft.setTextSize(1);
+  tft.setTextColor(CLR_NEON_YELLOW);
+  tft.setCursor(115, gaugeY + 5);
+  tft.print("VOLT");
+  tft.setTextSize(2);
+  tft.setTextColor(CLR_WHITE);
+  tft.setCursor(110, gaugeY + 20);
+  if (bms.dataValid) {
+    char vStr[8];
+    dtostrf(bms.voltage, 1, 1, vStr);
+    tft.print(vStr);
+    tft.setTextSize(1);
+    tft.print("V");
+  } else {
+    tft.print("--");
+  }
+
+  tft.setTextSize(1);
+  tft.setTextColor(CLR_NEON_ORANGE);
+  tft.setCursor(210, gaugeY + 5);
+  tft.print("CURR");
+  tft.setTextSize(2);
+  tft.setTextColor(CLR_WHITE);
+  tft.setCursor(205, gaugeY + 20);
+  if (bms.dataValid) {
+    char iStr[8];
+    dtostrf(bms.current, 1, 1, iStr);
+    tft.print(iStr);
+    tft.setTextSize(1);
+    tft.print("A");
+  } else {
+    tft.print("--");
+  }
+
+  tft.setTextSize(1);
+  tft.setTextColor(CLR_GRAY);
+  tft.setCursor(5, SCREEN_H - 10);
+  tft.print("JK BMS");
+
+  drawScanline();
+
+  savePrevData();
+}
+
+// ==================== 变化检测 ====================
 bool dataChanged() {
   bool changed = false;
   if (bms.power != prev.power) changed = true;
@@ -413,8 +591,6 @@ bool dataChanged() {
   if (bms.current != prev.current) changed = true;
   if (bms.temp1 != prev.temp1) changed = true;
   if (bms.soc != prev.soc) changed = true;
-  if (bms.capacity_remain != prev.cap_remain) changed = true;
-  if (bms.capacity_nominal != prev.cap_nominal) changed = true;
   if (bms.isCharging != prev.isCharging) changed = true;
   if (bms.isDischarging != prev.isDischarging) changed = true;
   if (bms.dataValid != prev.dataValid) changed = true;
@@ -428,229 +604,37 @@ void savePrevData() {
   prev.current = bms.current;
   prev.temp1 = bms.temp1;
   prev.soc = bms.soc;
-  prev.cap_remain = bms.capacity_remain;
-  prev.cap_nominal = bms.capacity_nominal;
   prev.isCharging = bms.isCharging;
   prev.isDischarging = bms.isDischarging;
   prev.dataValid = bms.dataValid;
   prev.bleConnected = bleConnected;
 }
 
-// ===================== 绘制静态元素 =====================
-void drawStaticElements() {
-  tft.drawFastHLine(0, 32, SCREEN_W, CLR_ACCENT);
-  drawCN12("功率", 10, 42, CLR_GRAY);
-  drawCN12("电池", 10, 128, CLR_GRAY);
-  drawCN12("温度", 10, 240, CLR_CYAN);
-  drawCN12("电压", 130, 240, CLR_YELLOW);
-  drawCN12("电流", 10, 282, CLR_ORANGE);
-  tft.drawFastHLine(10, 122, SCREEN_W - 20, CLR_DARK_GRAY);
-  tft.drawFastHLine(10, 234, SCREEN_W - 20, CLR_DARK_GRAY);
-}
-
-// ===================== 绘制动态元素 =====================
-void drawDynamicElements() {
-  // ---- 标题栏 ----
-  tft.fillRect(8, 4, 160, 14, CLR_BG);
-  drawCN12("JK BMS 监控", 8, 4, CLR_DIM_CYAN);
-
-  tft.fillRect(8, 18, 160, 10, CLR_BG);
-  tft.setTextSize(1);
-  tft.setTextColor(CLR_DARK_GRAY);
-  tft.setCursor(8, 20);
-  tft.print(BMS_NAME);
-
-  // BLE状态灯
-  if (bleConnected) {
-    tft.fillCircle(SCREEN_W - 10, 12, 4, CLR_GREEN);
-    tft.drawCircle(SCREEN_W - 10, 12, 6, CLR_DIM_GREEN);
-  } else {
-    tft.fillCircle(SCREEN_W - 10, 12, 4, CLR_RED);
-    tft.drawCircle(SCREEN_W - 10, 12, 6, CLR_DIM_RED);
-  }
-
-  // ---- 功率区域 ----
-  uint16_t pwrColor = getPowerColor();
-  uint16_t pwrBarColor = getPowerBarColor();
-
-  tft.fillRect(0, 34, SCREEN_W, 4, pwrBarColor);
-
-  float absPower = fabs(bms.power);
-  char pwrStr[16];
-
-  if (!bms.dataValid) {
-    strcpy(pwrStr, "---");
-  } else if (absPower >= 1000.0f) {
-    dtostrf(absPower, 1, 0, pwrStr);
-  } else if (absPower >= 100.0f) {
-    dtostrf(absPower, 1, 1, pwrStr);
-  } else if (absPower >= 10.0f) {
-    dtostrf(absPower, 1, 1, pwrStr);
-  } else {
-    dtostrf(absPower, 1, 2, pwrStr);
-  }
-
-  tft.fillRect(10, 56, 220, 36, CLR_BG);
-  tft.setTextSize(4);
-  tft.setTextColor(pwrColor);
-  tft.setCursor(10, 58);
-  if (bms.isCharging && bms.dataValid) tft.print(F("+"));
-  else if (bms.isDischarging && bms.dataValid) tft.print(F("-"));
-  tft.print(pwrStr);
-
-  tft.setTextSize(2);
-  tft.setTextColor(pwrColor);
-  int pwrLen = strlen(pwrStr);
-  int unitX = 10 + (bms.isCharging || bms.isDischarging ? 24 : 0) + pwrLen * 24;
-  if (unitX > SCREEN_W - 30) unitX = SCREEN_W - 30;
-  tft.setCursor(unitX, 74);
-  tft.print(F("W"));
-
-  // 充放电状态
-  tft.fillRect(10, 98, 180, 18, CLR_BG);
-  if (!bms.dataValid) {
-    drawCN14("等待数据...", 10, 98, CLR_GRAY);
-  } else if (bms.isCharging) {
-    drawCN14("\xe2\x96\xb2 充电中", 10, 98, CLR_GREEN);
-  } else if (bms.isDischarging) {
-    drawCN14("\xe2\x96\xbc 放电中", 10, 98, CLR_RED);
-  } else {
-    drawCN14("-- 待机", 10, 98, CLR_GRAY);
-  }
-
-  // ---- 电池容量区域 ----
-  uint16_t socColor = getSocColor(bms.soc);
-
-  char socStr[8];
-  if (bms.dataValid) {
-    sprintf(socStr, "%d%%", bms.soc);
-  } else {
-    strcpy(socStr, "--%");
-  }
-
-  tft.fillRect(10, 142, 200, 48, CLR_BG);
-  tft.setTextSize(5);
-  tft.setTextColor(CLR_WHITE);
-  tft.setCursor(10, 142);
-  tft.print(socStr);
-
-  drawProgressBar(10, 195, SCREEN_W - 20, 16, bms.dataValid ? bms.soc : 0, socColor);
-
-  tft.fillRect(10, 218, 220, 12, CLR_BG);
-  tft.setTextSize(1);
-  tft.setTextColor(CLR_GRAY);
-  tft.setCursor(10, 218);
-  if (bms.dataValid) {
-    char capStr[32];
-    sprintf(capStr, "%.1f / %.1f Ah", bms.capacity_remain, bms.capacity_nominal);
-    tft.print(capStr);
-  } else {
-    tft.print(F("--- / --- Ah"));
-  }
-
-  float usedCap = bms.capacity_nominal - bms.capacity_remain;
-  if (bms.dataValid && usedCap > 0) {
-    char usedStr[16];
-    sprintf(usedStr, "-%.1fAh", usedCap);
-    int16_t x1, y1;
-    uint16_t w, h;
-    tft.getTextBounds(usedStr, 0, 0, &x1, &y1, &w, &h);
-    tft.setCursor(SCREEN_W - 10 - w, 218);
-    tft.setTextColor(CLR_DIM_RED);
-    tft.print(usedStr);
-  }
-
-  // ---- 底部状态区域 ----
-  tft.fillRect(10, 256, 110, 22, CLR_BG);
-  tft.setTextSize(2);
-  tft.setTextColor(CLR_WHITE);
-  tft.setCursor(10, 256);
-  if (bms.dataValid) {
-    char t1Str[12];
-    dtostrf(bms.temp1, 1, 1, t1Str);
-    tft.print(t1Str);
-    tft.setTextSize(1);
-    tft.print(F(" C"));
-  } else {
-    tft.print(F("--"));
-  }
-
-  tft.fillRect(130, 256, 110, 22, CLR_BG);
-  tft.setTextSize(2);
-  tft.setTextColor(CLR_WHITE);
-  tft.setCursor(130, 256);
-  if (bms.dataValid) {
-    char vStr[12];
-    dtostrf(bms.voltage, 1, 1, vStr);
-    tft.print(vStr);
-    tft.setTextSize(1);
-    tft.print(F(" V"));
-  } else {
-    tft.print(F("--"));
-  }
-
-  tft.fillRect(10, 298, 110, 22, CLR_BG);
-  tft.setTextSize(2);
-  tft.setTextColor(CLR_WHITE);
-  tft.setCursor(10, 298);
-  if (bms.dataValid) {
-    char iStr[12];
-    dtostrf(bms.current, 1, 2, iStr);
-    tft.print(iStr);
-    tft.setTextSize(1);
-    tft.print(F(" A"));
-  } else {
-    tft.print(F("--"));
-  }
-
-  tft.fillRect(130, 298, 100, 14, CLR_BG);
-  if (bms.dataValid && (millis() - bms.lastUpdate > DATA_TIMEOUT)) {
-    drawCN12("超时!", 160, 298, CLR_RED);
-  } else if (bleConnected) {
-    drawCN12("在线", 170, 298, CLR_DIM_GREEN);
-  }
-}
-
-// ===================== 主界面绘制 =====================
-void drawDashboard() {
-  if (needFullRedraw) {
-    tft.fillScreen(CLR_BG);
-    drawStaticElements();
-    drawDynamicElements();
-    needFullRedraw = false;
-    savePrevData();
-    return;
-  }
-
-  if (!dataChanged() && !newDataReady) return;
-  newDataReady = false;
-
-  drawDynamicElements();
-  savePrevData();
-}
-
-// ===================== 启动画面 =====================
+// ==================== 启动画面 ====================
 void drawSplash() {
   tft.fillScreen(CLR_BG);
-
-  tft.drawFastHLine(40, 90, 160, CLR_ACCENT);
-  tft.drawFastHLine(40, 230, 160, CLR_ACCENT);
-
-  drawCN16("JK BMS", 55, 100, CLR_CYAN);
-  drawCN14("蓝牙监控仪表盘", 35, 130, CLR_GRAY);
-
-  tft.setTextSize(1);
+  
+  tft.setTextSize(3);
+  tft.setTextColor(CLR_NEON_CYAN);
+  tft.setCursor(80, 80);
+  tft.print("JK BMS");
+  
+  tft.setTextSize(2);
   tft.setTextColor(CLR_DIM_CYAN);
-  tft.setCursor(40, 160);
-  tft.print(BMS_NAME);
-
-  drawCN12("扫描中...", 70, 190, CLR_GRAY);
+  tft.setCursor(60, 120);
+  tft.print("RACE MODE");
+  
+  tft.setTextSize(1);
+  tft.setTextColor(CLR_GRAY);
+  tft.setCursor(100, 160);
+  tft.print("Connecting...");
+  
+  drawNeonRect(10, 10, SCREEN_W - 20, SCREEN_H - 20, CLR_DIM_CYAN);
 }
 
-// ===================== SETUP =====================
+// ==================== SETUP ====================
 void setup() {
   Serial.begin(115200);
-  Serial.println(F("[系统] 启动中..."));
 
   bms.dataValid = false;
   bms.soc = 0;
@@ -669,9 +653,16 @@ void setup() {
   prev.bleConnected = !bleConnected;
   needFullRedraw = true;
 
+  anim.lastFrame = 0;
+  anim.pulsePhase = 0;
+  anim.needleAngle = 0;
+  anim.targetNeedleAngle = 0;
+  anim.displayPower = 0;
+  anim.glowIntensity = 0;
+
   SPI.begin(TFT_SCLK, -1, TFT_MOSI, TFT_CS);
-  tft.init(SCREEN_W, SCREEN_H);
-  tft.setRotation(0);
+  tft.init(SCREEN_H, SCREEN_W);
+  tft.setRotation(1);
   tft.invertDisplay(false);
   tft.fillScreen(CLR_BG);
 
@@ -683,7 +674,7 @@ void setup() {
   digitalWrite(TFT_BL, HIGH);
 
   drawSplash();
-  delay(1000);
+  delay(1500);
 
   BLEDevice::init("");
   BLEScan* pScan = BLEDevice::getScan();
@@ -692,20 +683,13 @@ void setup() {
   pScan->setInterval(100);
   pScan->setWindow(99);
   pScan->start(30, false);
-
-  Serial.println(F("[系统] BLE扫描已启动"));
 }
 
-// ===================== LOOP =====================
+// ==================== LOOP ====================
 void loop() {
   if (doConnect) {
     doConnect = false;
-    if (connectToBMS()) {
-      Serial.println(F("[系统] BMS连接成功!"));
-    } else {
-      Serial.println(F("[系统] BMS连接失败，将重试..."));
-      doScan = true;
-    }
+    connectToBMS();
   }
 
   if (bleConnected && (millis() - lastCommandTime > COMMAND_INTERVAL)) {
@@ -714,18 +698,17 @@ void loop() {
   }
 
   if (millis() - lastDisplayUpdate > DISPLAY_INTERVAL) {
-    drawDashboard();
+    drawRaceDashboard();
     lastDisplayUpdate = millis();
   }
 
   if (!bleConnected && !doConnect) {
     if (millis() - lastScanTime > SCAN_INTERVAL) {
-      Serial.println(F("[系统] 重新扫描..."));
       BLEScan* pScan = BLEDevice::getScan();
       pScan->start(10, false);
       lastScanTime = millis();
     }
   }
 
-  delay(50);
+  delay(10);
 }
