@@ -712,3 +712,10837 @@ void loop() {
 
   delay(10);
 }
+/*
+ * JK BMS/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLE/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FR/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adaf/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarg/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL =/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA,/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+///*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) */*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint3/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frame/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.0/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw =/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connect/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!adv/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient =/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  p/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemote/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService)/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->get/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLER/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() &&/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotify/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar &&/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotify/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(CMD_DEVICE_INFO);
+  delay(500);
+  sendBMSCommand(CMD/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(CMD_DEVICE_INFO);
+  delay(500);
+  sendBMSCommand(CMD_CELL_INFO);
+
+  lastCommandTime =/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(CMD_DEVICE_INFO);
+  delay(500);
+  sendBMSCommand(CMD_CELL_INFO);
+
+  lastCommandTime = millis();
+  return true;
+}/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(CMD_DEVICE_INFO);
+  delay(500);
+  sendBMSCommand(CMD_CELL_INFO);
+
+  lastCommandTime = millis();
+  return true;
+}
+
+// ==================== 功率颜色系统 ====================/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(CMD_DEVICE_INFO);
+  delay(500);
+  sendBMSCommand(CMD_CELL_INFO);
+
+  lastCommandTime = millis();
+  return true;
+}
+
+// ==================== 功率颜色系统 ====================
+uint16_t getPowerColor(float power/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(CMD_DEVICE_INFO);
+  delay(500);
+  sendBMSCommand(CMD_CELL_INFO);
+
+  lastCommandTime = millis();
+  return true;
+}
+
+// ==================== 功率颜色系统 ====================
+uint16_t getPowerColor(float power) {
+  if (!bms.dataValid) return CLR_GRAY;
+  float/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(CMD_DEVICE_INFO);
+  delay(500);
+  sendBMSCommand(CMD_CELL_INFO);
+
+  lastCommandTime = millis();
+  return true;
+}
+
+// ==================== 功率颜色系统 ====================
+uint16_t getPowerColor(float power) {
+  if (!bms.dataValid) return CLR_GRAY;
+  float absP = abs(power);
+  
+  if/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(CMD_DEVICE_INFO);
+  delay(500);
+  sendBMSCommand(CMD_CELL_INFO);
+
+  lastCommandTime = millis();
+  return true;
+}
+
+// ==================== 功率颜色系统 ====================
+uint16_t getPowerColor(float power) {
+  if (!bms.dataValid) return CLR_GRAY;
+  float absP = abs(power);
+  
+  if (bms.isCharging) {
+/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(CMD_DEVICE_INFO);
+  delay(500);
+  sendBMSCommand(CMD_CELL_INFO);
+
+  lastCommandTime = millis();
+  return true;
+}
+
+// ==================== 功率颜色系统 ====================
+uint16_t getPowerColor(float power) {
+  if (!bms.dataValid) return CLR_GRAY;
+  float absP = abs(power);
+  
+  if (bms.isCharging) {
+    if (absP < 500) return CLR_NEON_BLUE;
+/*
+ * JK BMS 蓝牙监控仪表盘 - 赛车模式
+ * 硬件: ESP32-32E + ST7789 2.8寸 240x320 竖屏改横屏显示
+ * BMS: JK_BD4A24S10P (JK02_32S协议)
+ * 风格: 赛车仪表盘 - 霓虹科技感
+ */
+
+#include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEClient.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7789.h>
+#include <SPI.h>
+#include <U8g2lib.h>
+
+// ==================== 引脚配置 ====================
+#define TFT_CS    15
+#define TFT_DC    2
+#define TFT_RST   -1
+#define TFT_SCLK  14
+#define TFT_MOSI  13
+#define TFT_BL    21
+
+// ==================== BLE 配置 ====================
+#define BMS_MAC  "98:DA:20:07:B9:00"
+#define BMS_NAME "JK_BD4A24S10P"
+
+static BLEUUID serviceUUID((uint16_t)0xFFE0);
+static BLEUUID charUUID((uint16_t)0xFFE1);
+
+#define CMD_CELL_INFO   0x96
+#define CMD_DEVICE_INFO 0x97
+
+#define FRAME_HEADER_0 0x55
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0xEB
+#define FRAME_HEADER_3 0x90
+#define FRAME_TYPE_CELL_INFO 0x02
+#define MIN_FRAME_SIZE 300
+#define MAX_FRAME_SIZE 320
+
+// ==================== 屏幕配置 ====================
+// ST7789原生是240x320竖屏，我们用rotation=1转成横屏320x240
+#define SCREEN_W 320
+#define SCREEN_H 240
+
+// ==================== 赛车模式颜色 ====================
+#define CLR_BG          0x0000
+#define CLR_NEON_BLUE   0x001F
+#define CLR_NEON_GREEN  0x07E0
+#define CLR_NEON_YELLOW 0xFFE0
+#define CLR_NEON_RED    0xF800
+#define CLR_NEON_CYAN   0x07FF
+#define CLR_NEON_ORANGE 0xFD20
+#define CLR_WHITE       0xFFFF
+#define CLR_GRAY        0x7BEF
+#define CLR_DIM_CYAN    0x031F
+
+// ==================== 显示对象 ====================
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RST);
+
+// ==================== BMS 数据结构 ====================
+struct BMSData {
+  float voltage;
+  float power;
+  float current;
+  float temp1;
+  float temp2;
+  int   soc;
+  float capacity_remain;
+  float capacity_nominal;
+  bool  isCharging;
+  bool  isDischarging;
+  bool  dataValid;
+  unsigned long lastUpdate;
+};
+
+BMSData bms;
+
+struct PrevDisplay {
+  float power;
+  float voltage;
+  float current;
+  float temp1;
+  int   soc;
+  bool  bleConnected;
+};
+PrevDisplay prev = {0};
+
+// ==================== BLE 全局变量 ====================
+BLEClient* pClient = nullptr;
+BLERemoteCharacteristic* pWriteChar = nullptr;
+BLERemoteCharacteristic* pNotifyChar = nullptr;
+
+bool bleConnected = false;
+bool doConnect = false;
+bool doScan = false;
+BLEAdvertisedDevice* advDevice = nullptr;
+
+uint8_t frameBuf[MAX_FRAME_SIZE];
+int framePos = 0;
+bool frameStarted = false;
+volatile bool newDataReady = false;
+
+unsigned long lastDisplayUpdate = 0;
+unsigned long lastCommandTime = 0;
+unsigned long lastScanTime = 0;
+const unsigned long DISPLAY_INTERVAL = 100;
+const unsigned long COMMAND_INTERVAL = 8000;
+const unsigned long SCAN_INTERVAL = 5000;
+
+bool needFullRedraw = true;
+int scanlineY = 0;
+
+// ==================== CRC 计算 ====================
+uint8_t calcCRC(const uint8_t* data, uint16_t len) {
+  uint8_t crc = 0;
+  for (uint16_t i = 0; i < len; i++) {
+    crc += data[i];
+  }
+  return crc;
+}
+
+// ==================== 发送BLE命令 ====================
+void sendBMSCommand(uint8_t cmd) {
+  if (!pWriteChar) return;
+  uint8_t cmdFrame[20] = {
+    0xAA, 0x55, 0x90, 0xEB,
+    cmd, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00
+  };
+  cmdFrame[19] = calcCRC(cmdFrame, 19);
+  pWriteChar->writeValue(cmdFrame, 20, true);
+}
+
+// ==================== 解析JK02_32S帧 ====================
+void parseCellInfoFrame() {
+  if (framePos < MIN_FRAME_SIZE) return;
+
+  uint8_t crc = calcCRC(frameBuf, framePos - 1);
+  if (crc != frameBuf[framePos - 1]) return;
+  if (frameBuf[4] != FRAME_TYPE_CELL_INFO) return;
+
+  bms.voltage = ((uint32_t)frameBuf[121] << 24 | (uint32_t)frameBuf[120] << 16 |
+                 (uint32_t)frameBuf[119] << 8  | (uint32_t)frameBuf[118]) * 0.001f;
+
+  bms.power = ((uint32_t)frameBuf[125] << 24 | (uint32_t)frameBuf[124] << 16 |
+               (uint32_t)frameBuf[123] << 8  | (uint32_t)frameBuf[122]) * 0.001f;
+
+  int32_t rawCurrent = (int32_t)(
+    (uint32_t)frameBuf[129] << 24 | (uint32_t)frameBuf[128] << 16 |
+    (uint32_t)frameBuf[127] << 8  | (uint32_t)frameBuf[126]);
+  bms.current = rawCurrent * 0.001f;
+
+  int16_t rawT1 = (int16_t)((uint16_t)frameBuf[131] << 8 | frameBuf[130]);
+  bms.temp1 = rawT1 * 0.1f;
+
+  bms.soc = frameBuf[141];
+
+  bms.capacity_remain = ((uint32_t)frameBuf[145] << 24 | (uint32_t)frameBuf[144] << 16 |
+                         (uint32_t)frameBuf[143] << 8  | (uint32_t)frameBuf[142]) * 0.001f;
+
+  bms.capacity_nominal = ((uint32_t)frameBuf[149] << 24 | (uint32_t)frameBuf[148] << 16 |
+                          (uint32_t)frameBuf[147] << 8  | (uint32_t)frameBuf[146]) * 0.001f;
+
+  bms.isCharging    = (bms.current > 0.05f);
+  bms.isDischarging = (bms.current < -0.05f);
+  bms.dataValid     = true;
+  bms.lastUpdate    = millis();
+  newDataReady      = true;
+}
+
+// ==================== BLE 通知回调 ====================
+void notifyCallback(BLERemoteCharacteristic* pChar,
+                    uint8_t* pData, size_t length, bool isNotify) {
+  if (length >= 4 &&
+      pData[0] == FRAME_HEADER_0 && pData[1] == FRAME_HEADER_1 &&
+      pData[2] == FRAME_HEADER_2 && pData[3] == FRAME_HEADER_3) {
+    framePos = 0;
+    frameStarted = true;
+  }
+
+  if (frameStarted) {
+    for (size_t i = 0; i < length; i++) {
+      if (framePos < MAX_FRAME_SIZE) {
+        frameBuf[framePos++] = pData[i];
+      }
+      if (framePos >= MIN_FRAME_SIZE) {
+        frameStarted = false;
+        parseCellInfoFrame();
+        break;
+      }
+    }
+  }
+}
+
+// ==================== BLE 客户端回调 ====================
+class MyClientCallback : public BLEClientCallbacks {
+  void onConnect(BLEClient* pclient) {
+    bleConnected = true;
+    needFullRedraw = true;
+  }
+  void onDisconnect(BLEClient* pclient) {
+    bleConnected = false;
+    doConnect = false;
+    pWriteChar = nullptr;
+    pNotifyChar = nullptr;
+    needFullRedraw = true;
+  }
+};
+
+// ==================== BLE 扫描回调 ====================
+class MyScanCallback : public BLEAdvertisedDeviceCallbacks {
+  void onResult(BLEAdvertisedDevice advertisedDevice) {
+    if (advertisedDevice.getAddress().toString() == BMS_MAC) {
+      BLEDevice::getScan()->stop();
+      if (advDevice) delete advDevice;
+      advDevice = new BLEAdvertisedDevice(advertisedDevice);
+      doConnect = true;
+    }
+  }
+};
+
+// ==================== 连接BMS ====================
+bool connectToBMS() {
+  if (!advDevice) return false;
+
+  pClient = BLEDevice::createClient();
+  pClient->setClientCallbacks(new MyClientCallback());
+
+  if (!pClient->connect(advDevice)) {
+    delete pClient;
+    pClient = nullptr;
+    return false;
+  }
+
+  BLERemoteService* pService = pClient->getService(serviceUUID);
+  if (!pService) {
+    pClient->disconnect();
+    return false;
+  }
+
+  std::map<std::string, BLERemoteCharacteristic*>* charMap = pService->getCharacteristics();
+  for (auto& kv : *charMap) {
+    BLERemoteCharacteristic* c = kv.second;
+    if (c->canWrite() && !pWriteChar) pWriteChar = c;
+    if (c->canNotify() && !pNotifyChar) pNotifyChar = c;
+  }
+
+  if (!pNotifyChar) {
+    pClient->disconnect();
+    return false;
+  }
+
+  pNotifyChar->registerForNotify(notifyCallback);
+
+  if (!pWriteChar && pNotifyChar && pNotifyChar->canWrite()) {
+    pWriteChar = pNotifyChar;
+  }
+
+  delay(500);
+  sendBMSCommand(CMD_DEVICE_INFO);
+  delay(500);
+  sendBMSCommand(CMD_CELL_INFO);
+
+  lastCommandTime = millis();
+  return true;
+}
+
+// ==================== 功率颜色系统 ====================
+uint16_t getPowerColor(float power) {
+  if (!bms.dataValid) return CLR_GRAY;
+  float absP = abs(power);
+  
+  if (bms.isCharging) {
+    if (absP < 500) return CLR_NEON_BLUE;
+    if (absP < 1500) return CLR_NEON_CY
