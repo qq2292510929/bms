@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>PhantomGo · 虚拟定位</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  /* ============ Base ============ */
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --glass-bg: rgba(20, 22, 35, 0.55);
+    --glass-bg-light: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-border-strong: rgba(255, 255, 255, 0.28);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.65);
+    --text-muted: rgba(255, 255, 255, 0.4);
+    --accent-cyan: #22d3ee;
+    --accent-purple: #a855f7;
+    --accent-pink: #ec4899;
+    --accent-green: #34d399;
+    --accent-red: #f87171;
+    --accent-orange: #fb923c;
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.35);
+    --shadow-glow-cyan: 0 0 24px rgba(34, 211, 238, 0.4);
+    --shadow-glow-purple: 0 0 24px rgba(168, 85, 247, 0.4);
+  }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: var(--text-primary);
+    background: #0a0b14;
+    position: relative;
+    user-select: none;
+  }
+
+  /* ============ Animated Background ============ */
+  .bg-aurora {
+    position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    background: radial-gradient(ellipse at 20% 10%, #1e1b4b 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, #0c4a6e 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 80%, #4a1d5e 0%, transparent 50%),
+                linear-gradient(135deg, #0a0b14 0%, #0f172a 100%);
+  }
+  .blob {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5;
+    animation: float 20s ease-in-out infinite;
+  }
+  .blob-1 { width: 400px; height: 400px; background: #7c3aed; top: -100px; left: -100px; }
+  .blob-2 { width: 500px; height: 500px; background: #06b6d4; bottom: -150px; right: -100px; animation-delay: -7s; }
+  .blob-3 { width: 350px; height: 350px; background: #db2777; top: 40%; left: 60%; animation-delay: -14s; opacity: 0.35; }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(60px, -40px) scale(1.1); }
+    66% { transform: translate(-40px, 30px) scale(0.95); }
+  }
+
+  /* ============ Glass Panel ============ */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-glass);
+  }
+  .glass-strong {
+    background: rgba(15, 18, 32, 0.75);
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid var(--glass-border-strong);
+  }
+
+  /* ============ Layout ============ */
+  .app {
+    position: relative; z-index: 10;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    grid-template-rows: 1fr;
+    height: 100vh;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  /* Left sidebar */
+  .sidebar {
+    display: flex; flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  /* Header */
+  .header {
+    padding: 18px 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .logo {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-glow-cyan);
+    flex-shrink: 0;
+  }
+  .logo svg { width: 24px; height: 24px; }
+  .brand { display: flex; flex-direction: column; }
+  .brand-name {
+    font-size: 18px; font-weight: 700; letter-spacing: 0.5px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .brand-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; }
+  .status-pill {
+    margin-left: auto;
+    padding: 5px 12px; border-radius: 999px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(248, 113, 113, 0.12);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    color: var(--accent-red);
+  }
+  .status-pill.active {
+    background: rgba(52, 211, 153, 0.12);
+    border-color: rgba(52, 211, 153, 0.3);
+    color: var(--accent-green);
+  }
+  .status-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  /* Search */
+  .search-box {
+    padding: 10px 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .search-box input {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: var(--text-primary); font-size: 14px;
+  }
+  .search-box input::placeholder { color: var(--text-muted); }
+  .search-icon { color: var(--text-secondary); flex-shrink: 0; }
+  .search-results {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .search-results.show { max-height: 280px; }
+  .search-result {
+    padding: 10px 14px; cursor: pointer;
+    border-top: 1px solid var(--glass-border);
+    transition: background 0.2s;
+  }
+  .search-result:hover { background: var(--glass-bg-light); }
+  .search-result .r-name { font-size: 13px; font-weight: 500; }
+  .search-result .r-coord { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* Coordinate input */
+  .coord-box { padding: 14px; }
+  .coord-title {
+    font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .coord-row { display: flex; gap: 8px; }
+  .coord-field {
+    flex: 1; background: var(--glass-bg-light);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px; padding: 8px 10px;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .coord-field label { font-size: 10px; color: var(--text-muted); letter-spacing: 0.5px; }
+  .coord-field input {
+    background: transparent; border: none; outline: none;
+    color: var(--text-primary); font-size: 13px; font-family: "SF Mono", Menlo, monospace;
+  }
+  .btn-apply {
+    padding: 0 14px; border-radius: 10px; border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    color: white; font-weight: 600; font-size: 13px;
+    transition: transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-apply:hover { transform: translateY(-1px); box-shadow: var(--shadow-glow-cyan); }
+
+  /* Sections */
+  .section { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .section-head {
+    padding: 14px 18px 10px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .section-title {
+    font-size: 13px; font-weight: 600; color: var(--text-secondary);
+    letter-spacing: 0.5px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title svg { width: 16px; height: 16px; }
+  .btn-clear {
+    background: none; border: none; color: var(--text-muted);
+    font-size: 11px; cursor: pointer; padding: 4px 8px; border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .btn-clear:hover { color: var(--accent-red); background: rgba(248,113,113,0.1); }
+
+  .history-list {
+    flex: 1; overflow-y: auto; padding: 4px 10px 10px;
+  }
+  .history-list::-webkit-scrollbar { width: 4px; }
+  .history-list::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 4px; }
+  .history-item {
+    padding: 10px 12px; border-radius: 12px; margin-bottom: 6px;
+    background: var(--glass-bg-light); border: 1px solid transparent;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .history-item:hover {
+    border-color: var(--glass-border);
+    background: rgba(255,255,255,0.05);
+    transform: translateX(2px);
+  }
+  .hi-icon {
+    width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(34,211,238,0.2), rgba(168,85,247,0.2));
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent-cyan);
+  }
+  .hi-content { flex: 1; min-width: 0; }
+  .hi-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hi-coord { font-size: 10px; color: var(--text-muted); font-family: monospace; margin-top: 1px; }
+  .hi-time { font-size: 10px; color: var(--text-muted); }
+
+  .empty-state {
+    text-align: center; padding: 30px 20px; color: var(--text-muted);
+    font-size: 12px;
+  }
+
+  /* Map area */
+  .map-area {
+    position: relative;
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+  }
+  #map { width: 100%; height: 100%; background: #0f172a; }
+  .leaflet-container { background: #0f172a; }
+  .leaflet-tile { filter: brightness(0.85) contrast(1.05) saturate(0.9) hue-rotate(180deg); }
+
+  /* Top-right controls overlay on map */
+  .map-overlay-top {
+    position: absolute; top: 16px; right: 16px; z-index: 1000;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .map-btn {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s;
+    color: var(--text-primary);
+  }
+  .map-btn:hover { transform: translateY(-2px); }
+
+  /* Start/Stop big button */
+  .start-panel {
+    position: absolute; top: 16px; left: 16px; z-index: 1000;
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 8px 8px 16px;
+  }
+  .start-btn {
+    width: 56px; height: 56px; border-radius: 16px; border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    color: white; display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-glow-cyan);
+    transition: all 0.25s;
+  }
+  .start-btn:hover { transform: scale(1.05); }
+  .start-btn.active {
+    background: linear-gradient(135deg, var(--accent-green), #10b981);
+    box-shadow: 0 0 28px rgba(52,211,153,0.5);
+  }
+  .start-btn svg { width: 24px; height: 24px; }
+  .start-info .si-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .start-info .si-state { font-size: 15px; font-weight: 700; }
+
+  /* Joystick */
+  .joystick-panel {
+    position: absolute; bottom: 24px; left: 24px; z-index: 1000;
+    padding: 18px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .joystick {
+    width: 130px; height: 130px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid var(--glass-border-strong);
+    position: relative; cursor: pointer;
+    box-shadow: inset 0 0 30px rgba(255,255,255,0.05);
+  }
+  .joystick::before {
+    content: ''; position: absolute; inset: 12px; border-radius: 50%;
+    border: 1px dashed rgba(255,255,255,0.1);
+  }
+  .joystick-knob {
+    position: absolute; top: 50%; left: 50%;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    transform: translate(-50%, -50%);
+    box-shadow: var(--shadow-glow-cyan), 0 4px 12px rgba(0,0,0,0.4);
+    transition: transform 0.08s ease-out, width 0.15s, height 0.15s;
+    pointer-events: none;
+  }
+  .joystick.active .joystick-knob { width: 46px; height: 46px; }
+  .joystick-meta { display: flex; flex-direction: column; gap: 12px; }
+  .jm-row { display: flex; gap: 14px; }
+  .jm-stat { min-width: 64px; }
+  .jm-stat .jm-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .jm-stat .jm-value { font-size: 16px; font-weight: 700; margin-top: 2px; font-family: monospace; }
+  .jm-speed-slider {
+    width: 110px; -webkit-appearance: none; appearance: none;
+    height: 4px; border-radius: 4px;
+    background: rgba(255,255,255,0.1);
+    outline: none;
+  }
+  .jm-speed-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    cursor: pointer; box-shadow: var(--shadow-glow-cyan);
+  }
+
+  /* Current location floating card */
+  .loc-card {
+    position: absolute; bottom: 24px; right: 24px; z-index: 1000;
+    padding: 16px 20px;
+    min-width: 240px;
+  }
+  .loc-card .lc-title {
+    font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+  }
+  .lc-coord {
+    font-family: "SF Mono", Menlo, monospace; font-size: 14px; font-weight: 600;
+    display: flex; gap: 14px;
+  }
+  .lc-coord span small { font-size: 9px; color: var(--text-muted); display: block; }
+  .lc-name { font-size: 12px; color: var(--text-secondary); margin-top: 6px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* Toast */
+  .toast {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px);
+    z-index: 9999; padding: 12px 22px; border-radius: 12px;
+    background: rgba(15,18,32,0.9); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border-strong);
+    font-size: 13px; font-weight: 500;
+    opacity: 0; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-glass);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.success { border-color: rgba(52,211,153,0.4); }
+  .toast.error { border-color: rgba(248,113,113,0.4); }
+
+  /* Location pin pulse */
+  .pin-marker { background: transparent !important; border: none !important; }
+  .pin-pulse {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--accent-cyan);
+    box-shadow: 0 0 0 0 rgba(34,211,238,0.7);
+    animation: pinPulse 2s infinite;
+    border: 2px solid white;
+  }
+  .pin-marker.active .pin-pulse {
+    background: var(--accent-green);
+    box-shadow: 0 0 0 0 rgba(52,211,153,0.7);
+    animation: pinPulseActive 1.5s infinite;
+  }
+  @keyframes pinPulse {
+    0% { box-shadow: 0 0 0 0 rgba(34,211,238,0.6); }
+    70% { box-shadow: 0 0 0 16px rgba(34,211,238,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,211,238,0); }
+  }
+  @keyframes pinPulseActive {
+    0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.7); }
+    70% { box-shadow: 0 0 0 18px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+
+  /* Loading spinner */
+  .spinner {
+    width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.2);
+    border-top-color: var(--accent-cyan); border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    .sidebar { flex-direction: row; overflow-x: auto; }
+    .sidebar > * { flex-shrink: 0; width: 300px; }
+    .section { min-height: 200px; }
+  }
+  @media (max-width: 640px) {
+    .app { padding: 8px; gap: 8px; }
+    .joystick-panel { bottom: 12px; left: 12px; padding: 12px; }
+    .joystick { width: 100px; height: 100px; }
+    .loc-card { bottom: 12px; right: 12px; min-width: 180px; padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-aurora">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="app">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <!-- Header -->
+    <div class="glass header">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+      </div>
+      <div class="brand">
+        <span class="brand-name">PhantomGo</span>
+        <span class="brand-sub">VIRTUAL LOCATION</span>
+      </div>
+      <div class="status-pill" id="statusPill">
+        <span class="status-dot"></span>
+        <span id="statusText">未启动</span>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="glass">
+      <div class="search-box">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input id="searchInput" placeholder="搜索位置、地址或地标..." autocomplete="off" />
+        <div id="searchSpinner" class="spinner" style="display:none;"></div>
+      </div>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <!-- Coordinate input -->
+    <div class="glass coord-box">
+      <div class="coord-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        直接输入坐标
+      </div>
+      <div class="coord-row">
+        <div class="coord-field">
+          <label>纬度 LAT</label>
+          <input id="latInput" type="number" step="0.000001" placeholder="39.9042" />
+        </div>
+        <div class="coord-field">
+          <label>经度 LNG</label>
+          <input id="lngInput" type="number" step="0.000001" placeholder="116.4074" />
+        </div>
+        <button class="btn-apply" id="applyCoord">定位</button>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="glass section">
+      <div class="section-head">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          历史记录
+        </div>
+        <button class="btn-clear" id="clearHistory">清空</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="empty-state">暂无记录，点击地图或搜索位置开始</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAP ============ -->
+  <main class="map-area">
+    <div id="map"></div>
+
+    <!-- Start/Stop -->
+    <div class="glass-strong start-panel">
+      <button class="start-btn" id="startBtn" title="启动/停止虚拟定位">
+        <svg id="startIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="start-info">
+        <div class="si-label">虚拟定位</div>
+        <div class="si-state" id="startState">未启动</div>
+      </div>
+    </div>
+
+    <!-- Map buttons -->
+    <div class="map-overlay-top">
+      <div class="glass map-btn" id="locateBtn" title="定位到当前点">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+      </div>
+      <div class="glass map-btn" id="zoomIn" title="放大">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </div>
+      <div class="glass map-btn" id="zoomOut" title="缩小">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+      </div>
+    </div>
+
+    <!-- Joystick -->
+    <div class="glass-strong joystick-panel">
+      <div class="joystick" id="joystick">
+        <div class="joystick-knob" id="joystickKnob"></div>
+      </div>
+      <div class="joystick-meta">
+        <div class="jm-row">
+          <div class="jm-stat">
+            <div class="jm-label">方向</div>
+            <div class="jm-value" id="dirVal" style="color:var(--accent-cyan)">—</div>
+          </div>
+          <div class="jm-stat">
+            <div class="jm-label">速度</div>
+            <div class="jm-value" id="speedVal" style="color:var(--accent-purple)">0</div>
+          </div>
+        </div>
+        <div class="jm-row">
+          <div class="jm-stat" style="min-width:110px">
+            <div class="jm-label">移动速度 (m/s)</div>
+            <input type="range" class="jm-speed-slider" id="speedSlider" min="0.5" max="20" step="0.5" value="3" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Current location card -->
+    <div class="glass-strong loc-card">
+      <div class="lc-title">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        当前虚拟位置
+      </div>
+      <div class="lc-coord">
+        <span><small>LAT</small><span id="curLat">0.000000</span></span>
+        <span><small>LNG</small><span id="curLng">0.000000</span></span>
+      </div>
+      <div class="lc-name" id="curName">未设置位置</div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============ PhantomGo - Virtual Location Simulator ============ */
+
+const $ = (id) => document.getElementById(id);
+
+// State
+const state = {
+  lat: 39.9042,
+  lng: 116.4074,
+  active: false,
+  history: [],
+  speed: 3, // m/s
+  movement: { x: 0, y: 0, active: false },
+  lastTick: 0,
+};
+
+// Load history from localStorage
+try {
+  const saved = localStorage.getItem('phantomgo_history');
+  if (saved) state.history = JSON.parse(saved);
+} catch(e) {}
+
+/* ===== Map ===== */
+const map = L.map('map', {
+  zoomControl: false,
+  attributionControl: true,
+}).setView([state.lat, state.lng], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '© OpenStreetMap',
+}).addTo(map);
+
+// Custom pin marker
+const pinIcon = L.divIcon({
+  className: 'pin-marker',
+  html: '<div class="pin-pulse"></div>',
+  iconSize: [20, 20],
+  iconAnchor: [10, 10],
+});
+let pin = L.marker([state.lat, state.lng], { icon: pinIcon, draggable: true }).addTo(map);
+
+// Movement trail
+let trail = L.polyline([], {
+  color: '#22d3ee', weight: 3, opacity: 0.6, dashArray: '6 8',
+}).addTo(map);
+
+function updatePin(lat, lng, fly = false, nameHint = null) {
+  state.lat = lat; state.lng = lng;
+  if (fly) map.flyTo([lat, lng], Math.max(map.getZoom(), 14), { duration: 0.8 });
+  else pin.setLatLng([lat, lng]);
+  $('curLat').textContent = lat.toFixed(6);
+  $('curLng').textContent = lng.toFixed(6);
+  $('latInput').value = lat.toFixed(6);
+  $('lngInput').value = lng.toFixed(6);
+  if (nameHint) $('curName').textContent = nameHint;
+  reverseGeocode(lat, lng).then(name => {
+    if (name) $('curName').textContent = name;
+  });
+  addHistory(lat, lng);
+}
+
+pin.on('dragend', (e) => {
+  const ll = e.target.getLatLng();
+  updatePin(ll.lat, ll.lng);
+  showToast('位置已更新', 'success');
+});
+
+map.on('click', (e) => {
+  updatePin(e.latlng.lat, e.latlng.lng, true);
+});
+
+/* ===== Geocoding (Photon) ===== */
+let searchTimer = null;
+let lastResults = [];
+$('searchInput').addEventListener('input', (e) => {
+  const q = e.target.value.trim();
+  clearTimeout(searchTimer);
+  if (!q) { $('searchResults').classList.remove('show'); return; }
+  $('searchSpinner').style.display = 'block';
+  searchTimer = setTimeout(() => doSearch(q), 400);
+});
+$('searchInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && lastResults.length) {
+    e.preventDefault();
+    const it = lastResults[0];
+    updatePin(it.lat, it.lon, true, it.name);
+    $('searchInput').value = it.name;
+    $('searchResults').classList.remove('show');
+    showToast('已定位到搜索结果', 'success');
+  }
+});
+
+async function doSearch(q) {
+  try {
+    const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=8`);
+    const data = await res.json();
+    const items = (data.features || []).map(f => ({
+      lat: f.geometry.coordinates[1],
+      lon: f.geometry.coordinates[0],
+      name: f.properties.name || f.properties.city || f.properties.country || '未知位置',
+      detail: [f.properties.city, f.properties.state, f.properties.country].filter(Boolean).join(', ')
+    }));
+    renderSearchResults(items);
+  } catch(err) {
+    showToast('搜索失败，请检查网络', 'error');
+  } finally {
+    $('searchSpinner').style.display = 'none';
+  }
+}
+
+function renderSearchResults(items) {
+  const box = $('searchResults');
+  lastResults = items;
+  if (!items.length) { box.classList.remove('show'); return; }
+  box.innerHTML = items.map((it, i) => `
+    <div class="search-result" data-i="${i}">
+      <div class="r-name">${it.name}</div>
+      <div class="r-coord">${it.lat.toFixed(5)}, ${it.lon.toFixed(5)}${it.detail ? ' · ' + it.detail : ''}</div>
+    </div>
+  `).join('');
+  box.classList.add('show');
+  box.querySelectorAll('.search-result').forEach((el, i) => {
+    el.addEventListener('click', () => {
+      const it = items[i];
+      updatePin(it.lat, it.lon, true, it.name);
+      $('searchInput').value = it.name;
+      box.classList.remove('show');
+      showToast('已定位到搜索结果', 'success');
+    });
+  });
+}
+
+async function reverseGeocode(lat, lng) {
+  try {
+    const res = await fetch(`https://photon.komoot.io/reverse?lon=${lng}&lat=${lat}`);
+    const data = await res.json();
+    const f = (data.features && data.features[0]) || null;
+    if (f) {
+      const p = f.properties;
+      const name = p.name || p.city || p.country || '未知位置';
+      $('curName').textContent = name;
+      return name;
+    } else {
+      return null;
+    }
+  } catch(e) {
+    return null;
+  }
+}
+
+/* ===== Coordinate input ===== */
+$('applyCoord').addEventListener('click', () => {
+  const lat = parseFloat($('latInput').value);
+  const lng = parseFloat($('lngInput').value);
+  if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+    showToast('请输入有效的坐标', 'error'); return;
+  }
+  updatePin(lat, lng, true);
+  showToast('坐标已应用', 'success');
+});
+
+/* ===== History ===== */
+function addHistory(lat, lng) {
+  const key = `${lat.toFixed(4)},${lng.toFixed(4)}`;
+  state.history = state.history.filter(h => h.key !== key);
+  state.history.unshift({ key, lat, lng, name: $('curName').textContent, time: Date.now() });
+  if (state.history.length > 30) state.history.pop();
+  localStorage.setItem('phantomgo_history', JSON.stringify(state.history));
+  renderHistory();
+}
+
+function renderHistory() {
+  const box = $('historyList');
+  if (!state.history.length) {
+    box.innerHTML = '<div class="empty-state">暂无记录，点击地图或搜索位置开始</div>';
+    return;
+  }
+  box.innerHTML = state.history.map(h => `
+    <div class="history-item" data-lat="${h.lat}" data-lng="${h.lng}">
+      <div class="hi-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      </div>
+      <div class="hi-content">
+        <div class="hi-name">${h.name || '自定义位置'}</div>
+        <div class="hi-coord">${h.lat.toFixed(5)}, ${h.lng.toFixed(5)}</div>
+      </div>
+      <div class="hi-time">${timeAgo(h.time)}</div>
+    </div>
+  `).join('');
+  box.querySelectorAll('.history-item').forEach(el => {
+    el.addEventListener('click', () => {
+      updatePin(parseFloat(el.dataset.lat), parseFloat(el.dataset.lng), true);
+    });
+  });
+}
+
+function timeAgo(ts) {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return '刚刚';
+  if (s < 3600) return Math.floor(s/60) + '分钟前';
+  if (s < 86400) return Math.floor(s/3600) + '小时前';
+  return Math.floor(s/86400) + '天前';
+}
+
+$('clearHistory').addEventListener('click', () => {
+  state.history = [];
+  localStorage.removeItem('phantomgo_history');
+  renderHistory();
+  showToast('历史已清空', 'success');
+});
+
+/* ===== Start/Stop ===== */
+$('startBtn').addEventListener('click', () => {
+  state.active = !state.active;
+  const btn = $('startBtn');
+  const icon = $('startIcon');
+  const pill = $('statusPill');
+  if (state.active) {
+    btn.classList.add('active');
+    icon.innerHTML = '<rect x="6" y="6" width="12" height="12" rx="2"/>';
+    $('startState').textContent = '运行中';
+    $('statusText').textContent = '已激活';
+    pill.classList.add('active');
+    document.querySelector('.pin-marker').classList.add('active');
+    showToast('虚拟定位已启动', 'success');
+  } else {
+    btn.classList.remove('active');
+    icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    $('startState').textContent = '未启动';
+    $('statusText').textContent = '未启动';
+    pill.classList.remove('active');
+    document.querySelector('.pin-marker').classList.remove('active');
+    state.movement.active = false;
+    resetJoystick();
+    showToast('虚拟定位已停止', 'success');
+  }
+});
+
+/* ===== Map controls ===== */
+$('locateBtn').addEventListener('click', () => map.flyTo([state.lat, state.lng], 15, { duration: 0.8 }));
+$('zoomIn').addEventListener('click', () => map.zoomIn());
+$('zoomOut').addEventListener('click', () => map.zoomOut());
+
+/* ===== Joystick ===== */
+const joystick = $('joystick');
+const knob = $('joystickKnob');
+const jRect = () => joystick.getBoundingClientRect();
+let jPointerId = null;
+
+function handleJoystickStart(e) {
+  e.preventDefault();
+  if (!state.active) { showToast('请先启动虚拟定位', 'error'); return; }
+  const touch = e.touches ? e.touches[0] : e;
+  jPointerId = touch.identifier || 'mouse';
+  state.movement.active = true;
+  joystick.classList.add('active');
+  handleJoystickMove(e);
+}
+
+function handleJoystickMove(e) {
+  if (!state.movement.active) return;
+  e.preventDefault();
+  const touch = e.touches ? Array.from(e.touches).find(t => (t.identifier || 'mouse') === jPointerId) : e;
+  if (!touch) return;
+  const rect = jRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  let dx = touch.clientX - cx;
+  let dy = touch.clientY - cy;
+  const maxR = rect.width / 2 - 26;
+  const dist = Math.hypot(dx, dy);
+  if (dist > maxR) { dx = dx / dist * maxR; dy = dy / dist * maxR; }
+  knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+  state.movement.x = dx / maxR;
+  state.movement.y = dy / maxR;
+  updateJoystickUI();
+}
+
+function handleJoystickEnd(e) {
+  if (!state.movement.active) return;
+  state.movement.active = false;
+  state.movement.x = 0; state.movement.y = 0;
+  joystick.classList.remove('active');
+  resetJoystick();
+  updateJoystickUI();
+}
+
+function resetJoystick() {
+  knob.style.transform = 'translate(-50%, -50%)';
+}
+
+function updateJoystickUI() {
+  const { x, y, active } = state.movement;
+  if (!active || (x === 0 && y === 0)) {
+    $('dirVal').textContent = '—';
+    $('speedVal').textContent = '0';
+    return;
+  }
+  const angle = Math.atan2(y, x) * 180 / Math.PI;
+  let dir = '—';
+  if (angle >= -22.5 && angle < 22.5) dir = '东 →';
+  else if (angle >= 22.5 && angle < 67.5) dir = '东南 ↘';
+  else if (angle >= 67.5 && angle < 112.5) dir = '南 ↓';
+  else if (angle >= 112.5 && angle < 157.5) dir = '西南 ↙';
+  else if (angle >= 157.5 || angle < -157.5) dir = '西 ←';
+  else if (angle >= -157.5 && angle < -112.5) dir = '西北 ↖';
+  else if (angle >= -112.5 && angle < -67.5) dir = '北 ↑';
+  else if (angle >= -67.5 && angle < -22.5) dir = '东北 ↗';
+  $('dirVal').textContent = dir;
+  const mag = Math.min(1, Math.hypot(x, y));
+  $('speedVal').textContent = (mag * state.speed).toFixed(1);
+}
+
+joystick.addEventListener('mousedown', handleJoystickStart);
+window.addEventListener('mousemove', handleJoystickMove);
+window.addEventListener('mouseup', handleJoystickEnd);
+joystick.addEventListener('touchstart', handleJoystickStart, { passive: false });
+window.addEventListener('touchmove', handleJoystickMove, { passive: false });
+window.addEventListener('touchend', handleJoystickEnd);
+
+$('speedSlider').addEventListener('input', (e) => {
+  state.speed = parseFloat(e.target.value);
+  updateJoystickUI();
+});
+
+/* ===== Movement loop ===== */
+function movementLoop() {
+  const now = performance.now();
+  const dt = Math.min(0.1, (now - state.lastTick) / 1000);
+  state.lastTick = now;
+
+  if (state.active && state.movement.active) {
+    const { x, y } = state.movement;
+    const mag = Math.min(1, Math.hypot(x, y));
+    if (mag > 0.05) {
+      const speed = mag * state.speed; // m/s
+      // Convert meters to degrees (approx)
+      const dLat = (y * speed * dt) / 111320;
+      const dLng = (x * speed * dt) / (111320 * Math.cos(state.lat * Math.PI / 180));
+      const newLat = state.lat - dLat; // screen y is inverted
+      const newLng = state.lng + dLng;
+      state.lat = newLat; state.lng = newLng;
+      pin.setLatLng([newLat, newLng]);
+      map.panTo([newLat, newLng], { animate: true, duration: 0.3 });
+      trail.addLatLng([newLat, newLng]);
+      if (trail.getLatLngs().length > 500) trail.spliceLatLngs(0, trail.getLatLngs().length - 500);
+      $('curLat').textContent = newLat.toFixed(6);
+      $('curLng').textContent = newLng.toFixed(6);
+    }
+  }
+  requestAnimationFrame(movementLoop);
+}
+state.lastTick = performance.now();
+requestAnimationFrame(movementLoop);
+
+/* ===== Toast ===== */
+let toastTimer = null;
+function showToast(msg, type = 'success') {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' show';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ===== Init ===== */
+renderHistory();
+$('curLat').textContent = state.lat.toFixed(6);
+$('curLng').textContent = state.lng.toFixed(6);
+$('latInput').value = state.lat.toFixed(6);
+$('lngInput').value = state.lng.toFixed(6);
+reverseGeocode(state.lat, state.lng);
+</script>
+</body>
+</html>
