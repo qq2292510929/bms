@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "com.phantomgo.app-mergeDebugResources-32:/layout/item_search_result.xml",
+        "source": "com.phantomgo.app-main-35:/layout/item_search_result.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-mergeDebugResources-32:/layout/item_history.xml",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/layout/item_history.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-mergeDebugResources-32:/layout/item_search_result.xml",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/layout/item_search_result.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-mergeDebugResources-32:/layout/activity_main.xml",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.phantomgo.app-mergeDebugResources-32:/layout/activity_main.xml",
+        "source": "com.phantomgo.app-main-35:/layout/activity_main.xml"
+    }
+]

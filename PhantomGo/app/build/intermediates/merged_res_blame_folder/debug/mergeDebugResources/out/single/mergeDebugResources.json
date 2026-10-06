@@ -1,0 +1,70 @@
+[
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/drawable_marker_pin.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/drawable/marker_pin.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/drawable_ic_history.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/drawable/ic_history.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/layout_item_history.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/layout/item_history.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/drawable_ic_play.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/drawable/ic_play.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/drawable_bg_glass.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/drawable/bg_glass.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/layout_item_search_result.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/layout/item_search_result.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/drawable_ic_search.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/drawable/ic_search.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/drawable_bg_joystick_knob.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/drawable/bg_joystick_knob.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/drawable_bg_glass_strong.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/drawable/bg_glass_strong.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/layout_activity_main.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.phantomgo.app-debug-33:/layout_activity_main.xml.flat",
+        "source": "com.phantomgo.app-main-35:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/drawable_bg_btn_gradient.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/drawable/bg_btn_gradient.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/drawable_ic_launcher_background.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.phantomgo.app-debug-33:/layout_item_search_result.xml.flat",
+        "source": "com.phantomgo.app-main-35:/layout/item_search_result.xml"
+    },
+    {
+        "merged": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-debug-33:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "/root/.gradle/daemon/8.14.5/com.phantomgo.app-main-35:/drawable/ic_launcher_foreground.xml"
+    }
+]

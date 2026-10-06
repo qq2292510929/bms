@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Theme colors -->
+    <color name="bg_dark">#FF0A0B14</color>
+    <color name="glass_bg">#CC141623</color>
+    <color name="glass_border">#33FFFFFF</color>
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#A6FFFFFF</color>
+    <color name="text_muted">#66FFFFFF</color>
+
+    <color name="accent_cyan">#FF22D3EE</color>
+    <color name="accent_purple">#FFA855F7</color>
+    <color name="accent_green">#FF34D399</color>
+    <color name="accent_red">#FFF87171</color>
+    <color name="accent_orange">#FFFB923C</color>
+
+    <color name="bar_bg">#FF1A1C2E</color>
+</resources>

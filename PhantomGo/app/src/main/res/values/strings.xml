@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PhantomGo</string>
+    <string name="title_activity_main">PhantomGo</string>
+
+    <!-- UI strings -->
+    <string name="search_hint">搜索位置、地址或地标…</string>
+    <string name="coord_lat">纬度 LAT</string>
+    <string name="coord_lng">经度 LNG</string>
+    <string name="btn_apply">定位</string>
+    <string name="history_title">历史记录</string>
+    <string name="history_clear">清空</string>
+    <string name="history_empty">暂无记录，点击地图或搜索位置开始</string>
+    <string name="current_location">当前虚拟位置</string>
+    <string name="start">启动</string>
+    <string name="stop">停止</string>
+    <string name="status_inactive">未启动</string>
+    <string name="status_active">运行中</string>
+    <string name="joystick_direction">方向</string>
+    <string name="joystick_speed">速度</string>
+    <string name="speed_label">移动速度 (m/s)</string>
+    <string name="unknown_location">未知位置</string>
+    <string name="mock_not_enabled">请在开发者选项中将本应用设为模拟定位应用</string>
+    <string name="location_permission_needed">需要定位权限才能使用模拟定位功能</string>
+</resources>
