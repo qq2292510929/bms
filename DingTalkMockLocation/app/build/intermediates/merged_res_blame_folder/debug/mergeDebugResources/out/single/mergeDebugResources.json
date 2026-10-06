@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "com.example.mocklocation.app-debug-35:/layout_activity_main.xml.flat",
+        "source": "com.example.mocklocation.app-main-37:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.mocklocation.app-debug-35:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.mocklocation.app-main-37:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.mocklocation.app-debug-35:/drawable_ic_location_on.xml.flat",
+        "source": "com.example.mocklocation.app-main-37:/drawable/ic_location_on.xml"
+    },
+    {
+        "merged": "com.example.mocklocation.app-debug-35:/layout_item_favorite.xml.flat",
+        "source": "com.example.mocklocation.app-main-37:/layout/item_favorite.xml"
+    },
+    {
+        "merged": "com.example.mocklocation.app-debug-35:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.example.mocklocation.app-main-37:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.example.mocklocation.app-debug-35:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.mocklocation.app-main-37:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.example.mocklocation.app-debug-35:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.mocklocation.app-main-37:/drawable/ic_launcher_background.xml"
+    }
+]

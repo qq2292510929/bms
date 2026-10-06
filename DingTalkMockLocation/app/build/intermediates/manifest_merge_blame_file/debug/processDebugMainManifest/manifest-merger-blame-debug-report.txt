@@ -1,0 +1,220 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.mocklocation"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- 定位权限 -->
+12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+12-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:6:5-79
+12-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+13-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:7:5-81
+13-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:7:22-78
+14    <!-- 模拟位置权限（需在开发者选项中授权） -->
+15    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+15-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:9:5-11:39
+15-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:10:9-63
+16    <!-- 网络权限（用于地图和位置搜索） -->
+17    <uses-permission android:name="android.permission.INTERNET" />
+17-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:13:5-67
+17-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:13:22-64
+18    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+18-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:14:5-79
+18-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:14:22-76
+19    <!-- 前台服务权限（Android 9+） -->
+20    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+20-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:16:5-77
+20-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:16:22-74
+21    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+21-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:17:5-86
+21-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:17:22-83
+22    <!-- 定时唤醒权限 -->
+23    <uses-permission android:name="android.permission.WAKE_LOCK" />
+23-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:19:5-68
+23-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:19:22-65
+24    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+24-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:20:5-81
+24-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:20:22-78
+25    <!-- 忽略电池优化 -->
+26    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+26-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:22:5-95
+26-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:22:22-92
+27
+28    <uses-feature
+28-->[com.google.android.gms:play-services-maps:18.2.0] /root/.gradle/caches/8.14.5/transforms/3bade3e88adb630d2fa9c2b899e022b9/transformed/play-services-maps-18.2.0/AndroidManifest.xml:26:5-28:35
+29        android:glEsVersion="0x00020000"
+29-->[com.google.android.gms:play-services-maps:18.2.0] /root/.gradle/caches/8.14.5/transforms/3bade3e88adb630d2fa9c2b899e022b9/transformed/play-services-maps-18.2.0/AndroidManifest.xml:27:9-41
+30        android:required="true" />
+30-->[com.google.android.gms:play-services-maps:18.2.0] /root/.gradle/caches/8.14.5/transforms/3bade3e88adb630d2fa9c2b899e022b9/transformed/play-services-maps-18.2.0/AndroidManifest.xml:28:9-32
+31
+32    <queries>
+32-->[com.google.android.gms:play-services-maps:18.2.0] /root/.gradle/caches/8.14.5/transforms/3bade3e88adb630d2fa9c2b899e022b9/transformed/play-services-maps-18.2.0/AndroidManifest.xml:30:5-34:15
+33
+34        <!-- Needs to be explicitly declared on Android R+ -->
+35        <package android:name="com.google.android.apps.maps" />
+35-->[com.google.android.gms:play-services-maps:18.2.0] /root/.gradle/caches/8.14.5/transforms/3bade3e88adb630d2fa9c2b899e022b9/transformed/play-services-maps-18.2.0/AndroidManifest.xml:33:9-64
+35-->[com.google.android.gms:play-services-maps:18.2.0] /root/.gradle/caches/8.14.5/transforms/3bade3e88adb630d2fa9c2b899e022b9/transformed/play-services-maps-18.2.0/AndroidManifest.xml:33:18-61
+36    </queries>
+37
+38    <permission
+38-->[androidx.core:core:1.12.0] /root/.gradle/caches/8.14.5/transforms/4cf9bcbd6a2223cf244111767c1557c0/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+39        android:name="com.example.mocklocation.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+39-->[androidx.core:core:1.12.0] /root/.gradle/caches/8.14.5/transforms/4cf9bcbd6a2223cf244111767c1557c0/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+40        android:protectionLevel="signature" />
+40-->[androidx.core:core:1.12.0] /root/.gradle/caches/8.14.5/transforms/4cf9bcbd6a2223cf244111767c1557c0/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+41
+42    <uses-permission android:name="com.example.mocklocation.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+42-->[androidx.core:core:1.12.0] /root/.gradle/caches/8.14.5/transforms/4cf9bcbd6a2223cf244111767c1557c0/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+42-->[androidx.core:core:1.12.0] /root/.gradle/caches/8.14.5/transforms/4cf9bcbd6a2223cf244111767c1557c0/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+43
+44    <application
+44-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:24:5-54:19
+45        android:allowBackup="true"
+45-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:25:9-35
+46        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+46-->[androidx.core:core:1.12.0] /root/.gradle/caches/8.14.5/transforms/4cf9bcbd6a2223cf244111767c1557c0/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+47        android:debuggable="true"
+48        android:extractNativeLibs="false"
+49        android:icon="@mipmap/ic_launcher"
+49-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:26:9-43
+50        android:label="@string/app_name"
+50-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:27:9-41
+51        android:roundIcon="@mipmap/ic_launcher_round"
+51-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:28:9-54
+52        android:supportsRtl="true"
+52-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:29:9-35
+53        android:theme="@style/Theme.DingTalkMockLocation" >
+53-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:30:9-58
+54        <activity
+54-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:33:9-41:20
+55            android:name="com.example.mocklocation.MainActivity"
+55-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:34:13-41
+56            android:configChanges="orientation|screenSize|keyboardHidden"
+56-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:36:13-74
+57            android:exported="true" >
+57-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:35:13-36
+58            <intent-filter>
+58-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:37:13-40:29
+59                <action android:name="android.intent.action.MAIN" />
+59-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:38:17-69
+59-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:38:25-66
+60
+61                <category android:name="android.intent.category.LAUNCHER" />
+61-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:39:17-77
+61-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:39:27-74
+62            </intent-filter>
+63        </activity>
+64
+65        <!-- 模拟位置前台服务 -->
+66        <service
+66-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:44:9-47:56
+67            android:name="com.example.mocklocation.MockLocationService"
+67-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:45:13-48
+68            android:exported="false"
+68-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:46:13-37
+69            android:foregroundServiceType="location" />
+69-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:47:13-53
+70
+71        <!-- 定时打卡广播接收器 -->
+72        <receiver
+72-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:50:9-52:40
+73            android:name="com.example.mocklocation.ScheduleReceiver"
+73-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:51:13-45
+74            android:exported="false" />
+74-->/workspace/DingTalkMockLocation/app/src/main/AndroidManifest.xml:52:13-37
+75
+76        <provider
+76-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/8.14.5/transforms/72ed6e769781536cb65bd3f93be2f541/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+77            android:name="androidx.startup.InitializationProvider"
+77-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/8.14.5/transforms/72ed6e769781536cb65bd3f93be2f541/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+78            android:authorities="com.example.mocklocation.androidx-startup"
+78-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/8.14.5/transforms/72ed6e769781536cb65bd3f93be2f541/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+79            android:exported="false" >
+79-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/8.14.5/transforms/72ed6e769781536cb65bd3f93be2f541/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+80            <meta-data
+80-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/8.14.5/transforms/72ed6e769781536cb65bd3f93be2f541/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+81                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+81-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/8.14.5/transforms/72ed6e769781536cb65bd3f93be2f541/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+82                android:value="androidx.startup" />
+82-->[androidx.emoji2:emoji2:1.2.0] /root/.gradle/caches/8.14.5/transforms/72ed6e769781536cb65bd3f93be2f541/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+83            <meta-data
+83-->[androidx.lifecycle:lifecycle-process:2.6.1] /root/.gradle/caches/8.14.5/transforms/3187fc747d2160d7a9248f8ea8597a88/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+84                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+84-->[androidx.lifecycle:lifecycle-process:2.6.1] /root/.gradle/caches/8.14.5/transforms/3187fc747d2160d7a9248f8ea8597a88/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+85                android:value="androidx.startup" />
+85-->[androidx.lifecycle:lifecycle-process:2.6.1] /root/.gradle/caches/8.14.5/transforms/3187fc747d2160d7a9248f8ea8597a88/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+86            <meta-data
+86-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+87                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+88                android:value="androidx.startup" />
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+89        </provider> <!-- Needs to be explicitly declared on P+ -->
+90        <uses-library
+90-->[com.google.android.gms:play-services-maps:18.2.0] /root/.gradle/caches/8.14.5/transforms/3bade3e88adb630d2fa9c2b899e022b9/transformed/play-services-maps-18.2.0/AndroidManifest.xml:39:9-41:40
+91            android:name="org.apache.http.legacy"
+91-->[com.google.android.gms:play-services-maps:18.2.0] /root/.gradle/caches/8.14.5/transforms/3bade3e88adb630d2fa9c2b899e022b9/transformed/play-services-maps-18.2.0/AndroidManifest.xml:40:13-50
+92            android:required="false" />
+92-->[com.google.android.gms:play-services-maps:18.2.0] /root/.gradle/caches/8.14.5/transforms/3bade3e88adb630d2fa9c2b899e022b9/transformed/play-services-maps-18.2.0/AndroidManifest.xml:41:13-37
+93
+94        <activity
+94-->[com.google.android.gms:play-services-base:18.0.1] /root/.gradle/caches/8.14.5/transforms/21ca06a08dbf67f455ee5e1e6daffdc5/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+95            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+95-->[com.google.android.gms:play-services-base:18.0.1] /root/.gradle/caches/8.14.5/transforms/21ca06a08dbf67f455ee5e1e6daffdc5/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+96            android:exported="false"
+96-->[com.google.android.gms:play-services-base:18.0.1] /root/.gradle/caches/8.14.5/transforms/21ca06a08dbf67f455ee5e1e6daffdc5/transformed/play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+97            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+97-->[com.google.android.gms:play-services-base:18.0.1] /root/.gradle/caches/8.14.5/transforms/21ca06a08dbf67f455ee5e1e6daffdc5/transformed/play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+98
+99        <meta-data
+99-->[com.google.android.gms:play-services-basement:18.0.0] /root/.gradle/caches/8.14.5/transforms/582fcb2ee8721096639dc061e780b5cf/transformed/play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
+100            android:name="com.google.android.gms.version"
+100-->[com.google.android.gms:play-services-basement:18.0.0] /root/.gradle/caches/8.14.5/transforms/582fcb2ee8721096639dc061e780b5cf/transformed/play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
+101            android:value="@integer/google_play_services_version" />
+101-->[com.google.android.gms:play-services-basement:18.0.0] /root/.gradle/caches/8.14.5/transforms/582fcb2ee8721096639dc061e780b5cf/transformed/play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
+102
+103        <receiver
+103-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+104            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+104-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+105            android:directBootAware="false"
+105-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+106            android:enabled="true"
+106-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+107            android:exported="true"
+107-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+108            android:permission="android.permission.DUMP" >
+108-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+109            <intent-filter>
+109-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+110                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+110-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+110-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+111            </intent-filter>
+112            <intent-filter>
+112-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+113                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+113-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+113-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+114            </intent-filter>
+115            <intent-filter>
+115-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+116                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+116-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+116-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+117            </intent-filter>
+118            <intent-filter>
+118-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+119                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+119-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+119-->[androidx.profileinstaller:profileinstaller:1.3.0] /root/.gradle/caches/8.14.5/transforms/363975946173b9e0ecc481c7dfabe188/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+120            </intent-filter>
+121        </receiver>
+122    </application>
+123
+124</manifest>

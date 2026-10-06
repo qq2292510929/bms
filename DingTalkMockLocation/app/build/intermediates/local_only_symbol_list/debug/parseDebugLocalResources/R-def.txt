@@ -1,0 +1,36 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color primary
+color primary_dark
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+drawable ic_location_on
+id btnAddFavorite
+id btnDelete
+id btnOpenDingTalk
+id btnStartMock
+id btnStopMock
+id btnUse
+id cbWeekdaysOnly
+id etAltitude
+id etClockInTime
+id etClockOutTime
+id etLatitude
+id etLongitude
+id rvFavorites
+id swSchedule
+id tvCoord
+id tvName
+id tvStatus
+layout activity_main
+layout item_favorite
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Theme.DingTalkMockLocation
