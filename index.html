@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lingua — 沉浸式多语言学习平台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ============ AUTH VIEW ============ -->
+    <section id="view-auth" class="view view-auth active">
+      <div class="auth-shell">
+        <div class="auth-visual">
+          <div class="auth-grain"></div>
+          <div class="auth-brand">
+            <div class="brand-mark">
+              <svg viewBox="0 0 32 32" width="34" height="34" fill="none">
+                <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8 12h16M8 16h16M8 20h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="brand-name">Lingua</span>
+          </div>
+          <h1 class="auth-headline">
+            用一门语言，<br/>打开一整个世界。
+          </h1>
+          <p class="auth-sub">英语 · 日语 · 韩语 · 沉浸式分级学习，从开口到流利。</p>
+          <div class="auth-features">
+            <div class="af"><span class="af-icon">◐</span><span>分级课程 A1 → C1</span></div>
+            <div class="af"><span class="af-icon">◎</span><span>单词 · 语法 · 口语 · 听力</span></div>
+            <div class="af"><span class="af-icon">✦</span><span>智能路径与成就激励</span></div>
+          </div>
+        </div>
+
+        <div class="auth-form-wrap">
+          <div class="auth-card">
+            <div class="auth-tabs">
+              <button class="auth-tab active" data-tab="login">登录</button>
+              <button class="auth-tab" data-tab="register">注册</button>
+            </div>
+
+            <form id="form-login" class="auth-form active">
+              <label class="field">
+                <span>邮箱</span>
+                <input type="email" name="email" placeholder="you@lingua.app" required />
+              </label>
+              <label class="field">
+                <span>密码</span>
+                <input type="password" name="password" placeholder="至少 6 位" required minlength="6" />
+              </label>
+              <button type="submit" class="btn btn-primary btn-block">登录</button>
+              <p class="auth-hint">演示账号：demo@lingua.app / demo123</p>
+              <div class="form-msg" id="login-msg"></div>
+            </form>
+
+            <form id="form-register" class="auth-form">
+              <label class="field">
+                <span>昵称</span>
+                <input type="text" name="name" placeholder="你的学习昵称" required />
+              </label>
+              <label class="field">
+                <span>邮箱</span>
+                <input type="email" name="email" placeholder="you@lingua.app" required />
+              </label>
+              <label class="field">
+                <span>密码</span>
+                <input type="password" name="password" placeholder="至少 6 位" required minlength="6" />
+              </label>
+              <label class="field">
+                <span>目标语言</span>
+                <select name="lang">
+                  <option value="en">英语 English</option>
+                  <option value="ja">日本語</option>
+                  <option value="ko">한국어</option>
+                </select>
+              </label>
+              <button type="submit" class="btn btn-primary btn-block">创建账户</button>
+              <div class="form-msg" id="register-msg"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ APP SHELL ============ -->
+    <div id="app-shell" class="app-shell">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sb-brand">
+          <div class="brand-mark small">
+            <svg viewBox="0 0 32 32" width="26" height="26" fill="none">
+              <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 12h16M8 16h16M8 20h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="brand-name">Lingua</span>
+        </div>
+
+        <nav class="sb-nav">
+          <button class="nav-item active" data-route="dashboard">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+            <span>主页</span>
+          </button>
+          <button class="nav-item" data-route="courses">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4zM4 9h16M8 5v14"/></svg>
+            <span>课程</span>
+          </button>
+          <button class="nav-item" data-route="learn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18" stroke-linecap="round"/></svg>
+            <span>练习</span>
+          </button>
+          <button class="nav-item" data-route="progress">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 19h16M8 15v-4M12 15V8M16 15v-6"/></svg>
+            <span>进度</span>
+          </button>
+          <button class="nav-item" data-route="community">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-11.7 7.9L3 21l1.6-6.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
+            <span>社区</span>
+          </button>
+        </nav>
+
+        <div class="sb-footer">
+          <div class="sb-user" id="sb-user">
+            <div class="avatar" id="sb-avatar">U</div>
+            <div class="sb-user-meta">
+              <div class="sb-user-name" id="sb-name">学习者</div>
+              <div class="sb-user-streak" id="sb-streak">🔥 0 天</div>
+            </div>
+          </div>
+          <button class="btn-logout" id="btn-logout">退出</button>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main class="main">
+        <!-- Topbar -->
+        <header class="topbar">
+          <div class="topbar-left">
+            <h2 class="page-title" id="page-title">主页</h2>
+          </div>
+          <div class="topbar-right">
+            <div class="lang-switch">
+              <button class="ls-btn active" data-lang="en">EN</button>
+              <button class="ls-btn" data-lang="ja">JA</button>
+              <button class="ls-btn" data-lang="ko">KO</button>
+            </div>
+            <div class="xp-pill"><span>XP</span><strong id="topbar-xp">0</strong></div>
+          </div>
+        </header>
+
+        <!-- ========== DASHBOARD ========== -->
+        <section id="view-dashboard" class="view view-main active">
+          <!-- Hero / Today -->
+          <div class="dash-hero">
+            <div class="dash-hero-text">
+              <p class="eyebrow">今日学习</p>
+              <h1 class="dash-greeting" id="dash-greeting">你好，学习者</h1>
+              <p class="dash-desc" id="dash-desc">坚持是最浪漫的天赋。今天也向前走一点点。</p>
+              <div class="dash-cta-row">
+                <button class="btn btn-primary btn-lg" data-route="learn">继续学习 →</button>
+                <button class="btn btn-ghost btn-lg" data-route="courses">浏览课程</button>
+              </div>
+            </div>
+            <div class="dash-hero-orb">
+              <div class="orb-ring">
+                <svg viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="52" class="orb-track"/>
+                  <circle cx="60" cy="60" r="52" class="orb-prog" id="daily-ring"/>
+                </svg>
+                <div class="orb-center">
+                  <div class="orb-num" id="daily-percent">0%</div>
+                  <div class="orb-label">今日目标</div>
+                </div>
+              </div>
+              <div class="orb-stats">
+                <div><span>已学</span><strong id="stat-learned">0</strong></div>
+                <div><span>连对</span><strong id="stat-streak">0</strong></div>
+                <div><span>分钟</span><strong id="stat-minutes">0</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recommended path -->
+          <div class="section">
+            <div class="section-head">
+              <h3>推荐学习路径</h3>
+              <span class="section-sub" id="path-reason">基于你的水平与目标生成</span>
+            </div>
+            <div class="path-track" id="path-track"></div>
+          </div>
+
+          <!-- Quick modules -->
+          <div class="section">
+            <div class="section-head"><h3>快速练习</h3><span class="section-sub">选一个模块开始</span></div>
+            <div class="module-grid">
+              <button class="module-card" data-module="vocab">
+                <div class="module-icon">词</div>
+                <div class="module-body">
+                  <h4>单词记忆</h4>
+                  <p>闪卡 + 间隔重复</p>
+                </div>
+                <span class="module-arrow">→</span>
+              </button>
+              <button class="module-card" data-module="grammar">
+                <div class="module-icon">法</div>
+                <div class="module-body">
+                  <h4>语法练习</h4>
+                  <p>选择与填空</p>
+                </div>
+                <span class="module-arrow">→</span>
+              </button>
+              <button class="module-card" data-module="speak">
+                <div class="module-icon">说</div>
+                <div class="module-body">
+                  <h4>口语跟读</h4>
+                  <p>发音与语调</p>
+                </div>
+                <span class="module-arrow">→</span>
+              </button>
+              <button class="module-card" data-module="listen">
+                <div class="module-icon">听</div>
+                <div class="module-body">
+                  <h4>听力训练</h4>
+                  <p>听写与理解</p>
+                </div>
+                <span class="module-arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Achievements preview -->
+          <div class="section">
+            <div class="section-head">
+              <h3>成就</h3>
+              <button class="link-btn" data-route="community">查看全部 →</button>
+            </div>
+            <div class="ach-row" id="dash-achievements"></div>
+          </div>
+        </section>
+
+        <!-- ========== COURSES ========== -->
+        <section id="view-courses" class="view view-main">
+          <div class="section">
+            <div class="section-head"><h3>分级课程</h3><span class="section-sub" id="course-lang-label">英语 · A1 → C1</span></div>
+            <div class="course-levels" id="course-levels"></div>
+          </div>
+        </section>
+
+        <!-- ========== LEARN (interactive modules) ========== -->
+        <section id="view-learn" class="view view-main">
+          <div id="learn-home">
+            <div class="section">
+              <div class="section-head"><h3>互动练习</h3><span class="section-sub" id="learn-lang-label">当前语言：英语</span></div>
+              <div class="module-grid large">
+                <button class="module-card" data-module="vocab">
+                  <div class="module-icon big">词</div>
+                  <div class="module-body">
+                    <h4>单词记忆</h4>
+                    <p>闪卡翻牌，标记认识/模糊/陌生，系统智能复习</p>
+                  </div>
+                </button>
+                <button class="module-card" data-module="grammar">
+                  <div class="module-icon big">法</div>
+                  <div class="module-body">
+                    <h4>语法练习</h4>
+                    <p>单选、多选、填空，即时反馈与解析</p>
+                  </div>
+                </button>
+                <button class="module-card" data-module="speak">
+                  <div class="module-icon big">说</div>
+                  <div class="module-body">
+                    <h4>口语跟读</h4>
+                    <p>听示范 → 录音跟读 → 评分反馈</p>
+                  </div>
+                </button>
+                <button class="module-card" data-module="listen">
+                  <div class="module-icon big">听</div>
+                  <div class="module-body">
+                    <h4>听力训练</h4>
+                    <p>播放音频，完成听写与理解题</p>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Practice session -->
+          <div id="learn-session" class="hidden">
+            <button class="back-btn" id="learn-back">← 返回练习</button>
+            <div class="session-head">
+              <h3 id="session-title">练习</h3>
+              <div class="session-progress">
+                <div class="sp-bar"><div class="sp-fill" id="sp-fill"></div></div>
+                <span id="sp-text">0 / 0</span>
+              </div>
+            </div>
+            <div class="session-card" id="session-card"></div>
+            <div class="session-footer" id="session-footer"></div>
+          </div>
+        </section>
+
+        <!-- ========== PROGRESS ========== -->
+        <section id="view-progress" class="view view-main">
+          <div class="section">
+            <div class="section-head"><h3>学习概览</h3><span class="section-sub">过去 14 天</span></div>
+            <div class="kpi-row">
+              <div class="kpi"><span>总 XP</span><strong id="kpi-xp">0</strong><small id="kpi-xp-delta">+0 本周</small></div>
+              <div class="kpi"><span>连续天数</span><strong id="kpi-streak">0</strong><small>天</small></div>
+              <div class="kpi"><span>已掌握单词</span><strong id="kpi-words">0</strong><small>个</small></div>
+              <div class="kpi"><span>完成课时</span><strong id="kpi-lessons">0</strong><small>节</small></div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-head"><h3>活跃度</h3><span class="section-sub">每日学习时长（分钟）</span></div>
+            <div class="chart-wrap">
+              <svg id="activity-chart" viewBox="0 0 600 200" preserveAspectRatio="none"></svg>
+              <div class="chart-axis" id="chart-axis"></div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-head"><h3>模块掌握度</h3><span class="section-sub">各技能雷达</span></div>
+            <div class="skill-grid" id="skill-grid"></div>
+          </div>
+
+          <div class="section">
+            <div class="section-head"><h3>语言等级</h3><span class="section-sub">按 CEFR 分级</span></div>
+            <div class="lang-progress" id="lang-progress"></div>
+          </div>
+        </section>
+
+        <!-- ========== COMMUNITY ========== -->
+        <section id="view-community" class="view view-main">
+          <div class="comm-layout">
+            <div class="comm-feed">
+              <div class="section-head"><h3>社区动态</h3><span class="section-sub">学习者分享</span></div>
+              <div class="post-compose">
+                <textarea id="post-input" placeholder="分享你的学习心得或提问..."></textarea>
+                <div class="post-actions">
+                  <select id="post-tag">
+                    <option value="英语">英语</option>
+                    <option value="日语">日语</option>
+                    <option value="韩语">韩语</option>
+                    <option value="心得">心得</option>
+                    <option value="提问">提问</option>
+                  </select>
+                  <button class="btn btn-primary" id="post-submit">发布</button>
+                </div>
+              </div>
+              <div id="post-list" class="post-list"></div>
+            </div>
+
+            <div class="comm-side">
+              <div class="side-card">
+                <h4>我的成就</h4>
+                <div class="ach-grid" id="ach-grid"></div>
+              </div>
+              <div class="side-card">
+                <h4>学习排行榜</h4>
+                <ol class="leaderboard" id="leaderboard"></ol>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
